@@ -2,8 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title></title>
+    <script src="Ui/main.js"></script>
 </head>
-<body>
+<body onload="init(event)" onkeydown="onKeyDown(event)">
     <header>
         <nav>
             <ul>
@@ -12,7 +13,9 @@
             </ul>
         </nav>
     </header>
-    <div id="battleground"></div>
+    <div>
+        <canvas id="viewport"/>
+    </div>
     <footer></footer>
 </body>
 </html>
