@@ -58,8 +58,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="index.html" />
+    <Content Include="Scene\engine.js" />
+    <Content Include="Scene\game-object.js" />
     <Content Include="Scene\movement.js" />
     <Content Include="Scene\prototype.js" />
+    <Content Include="Scene\renderer.js" />
     <Content Include="Ui\main.js" />
     <Content Include="Web.config" />
   </ItemGroup>
