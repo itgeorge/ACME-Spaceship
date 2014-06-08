@@ -58,11 +58,21 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="index.html" />
+    <Content Include="Scene\boss.js" />
+    <Content Include="Scene\bullet.js" />
+    <Content Include="Scene\enemy-ship.js" />
+    <Content Include="Scene\laser.js" />
+    <Content Include="Scene\npc.js" />
+    <Content Include="Scene\pick-up.js" />
+    <Content Include="Scene\player-ship.js" />
     <Content Include="Scene\engine.js" />
     <Content Include="Scene\game-object.js" />
     <Content Include="Scene\movement.js" />
+    <Content Include="Scene\projectile.js" />
     <Content Include="Scene\prototype.js" />
     <Content Include="Scene\renderer.js" />
+    <Content Include="Scene\seeker.js" />
+    <Content Include="Scene\self-controlled-object.js" />
     <Content Include="Ui\main.js" />
     <Content Include="Web.config" />
   </ItemGroup>

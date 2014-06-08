@@ -1,4 +1,4 @@
-﻿var GameObject = Class.create({
+﻿var EnemyShip = Class.create(NPC, {
     initialize: function () {
 
     }

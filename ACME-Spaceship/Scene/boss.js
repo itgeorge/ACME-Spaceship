@@ -1,4 +1,4 @@
-﻿var GameObject = Class.create({
+﻿var Boss = Class.create(NPC, {
     initialize: function () {
 
     }
