@@ -4,8 +4,8 @@
     var screenHeight = 640;
 
     //INIT
-    var canvasEl = document.getElementById("viewport.js");
-    var canvasContext = canvas.getContext("2d");
+    //var canvasEl = document.getElementById("viewport.js");
+    //var canvasContext = canvas.getContext("2d");
     var engine = new Engine(screenWidth, screenHeight);
 
     //EVENTS

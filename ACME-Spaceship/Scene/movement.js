@@ -85,27 +85,27 @@ var FollowShipMove = Class.create(Movement, {
     }
 });
 
-(function () {
-    //ctor params (screenWidth, screenHeight, speed, zigZagLength)
-    var shipA = new ZigZagMove(100, 200, 1, 5);
-    //ctor params (screenWidth, screenHeight, speed)
-    var shipB = new StraightMove(100, 200, 4);
-    //ctor params (screenWidth, screenHeight, speed)
-    var shipC = new FollowShipMove(100, 200, 2);
-    //getNexMove(ship X coordinate);
-    log(shipC.getNextMove(121));
-    log(shipC.getNextMove(121));
-    //...
-    //enemy x is like ship x
-    log(shipC.getNextMove(6));
-    log(shipC.getNextMove(6));// x doesnt change
+//(function () {
+//    //ctor params (screenWidth, screenHeight, speed, zigZagLength)
+//    var shipA = new ZigZagMove(100, 200, 1, 5);
+//    //ctor params (screenWidth, screenHeight, speed)
+//    var shipB = new StraightMove(100, 200, 4);
+//    //ctor params (screenWidth, screenHeight, speed)
+//    var shipC = new FollowShipMove(100, 200, 2);
+//    //getNexMove(ship X coordinate);
+//    log(shipC.getNextMove(121));
+//    log(shipC.getNextMove(121));
+//    //...
+//    //enemy x is like ship x
+//    log(shipC.getNextMove(6));
+//    log(shipC.getNextMove(6));// x doesnt change
 
-    for (var i = 0; i < 103; i++) {
-        //log(shipA.getNextMove());
-    }
-})();
+//    for (var i = 0; i < 103; i++) {
+//        //log(shipA.getNextMove());
+//    }
+//})();
 
-function log(msg) {
-    console.log(msg);
-}
+//function log(msg) {
+//    console.log(msg);
+//}
 
