@@ -105,7 +105,7 @@ var FollowShipMove = Class.create(Movement, {
 //    }
 //})();
 
-//function log(msg) {
-//    console.log(msg);
-//}
+function log(msg) {
+    console.log(msg);
+}
 

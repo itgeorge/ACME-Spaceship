@@ -61,6 +61,7 @@
     <Content Include="Scene\boss.js" />
     <Content Include="Scene\bullet.js" />
     <Content Include="Scene\enemy-ship.js" />
+    <Content Include="Scene\game-logic.js" />
     <Content Include="Scene\laser.js" />
     <Content Include="Scene\npc.js" />
     <Content Include="Scene\pick-up.js" />

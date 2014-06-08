@@ -9,25 +9,55 @@
     var engine = new Engine(screenWidth, screenHeight);
 
     //EVENTS
-    window.addEventListener("keydown", onKeyDown, false);
+    window.addEventListener("keydown", keysPressed, false);
+    window.addEventListener("keyup", keysReleased, false);
+
+    var keys = [];
 
     //FUNCTIONS
-    function onKeyDown(event) {
-        log(event.keyCode);
-        switch (event.keyCode) {
-            case 37:
-                // left key pressed
-                break;
-            case 38:
-                // up key pressed
-                break;
-            case 39:
-                // right key pressed
-                break;
-            case 40:
-                // down key pressed
-                break;
+    function keysPressed(e) {
+        // store an entry for every key pressed
+        keys[e.keyCode] = true;
+
+        //left
+        if (keys[37]) {
+            engine.PlayerShip.moveLeft();
         }
+
+        //up
+        if (keys[38]) {
+            engine.PlayerShip.moveUp();
+        }
+
+        //right
+        if (keys[39]) {
+            engine.PlayerShip.moveRight();
+        }
+
+        //down
+        if (keys[40]) {
+            engine.PlayerShip.moveDown();
+        }
+
+        //v
+        if (keys[86]) {
+            engine.PlayerShip.fireLaser();
+        }
+
+        //b
+        if (keys[66]) {
+            engine.PlayerShip.fireSeeker();
+        }
+
+        //shapcia
+        if (keys[32]) {
+            engine.PlayerShip.fireDefaut();
+        }
+    }
+
+    function keysReleased(e) {
+        // mark keys that were released
+        keys[e.keyCode] = false;
     }
 
     function log(msg) {
