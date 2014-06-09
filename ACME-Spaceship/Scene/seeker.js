@@ -1,4 +1,5 @@
-﻿var Seeker = Class.create(Projectile, {
+﻿var Scene = Scene || {};
+Scene.Seeker = Class.create(Scene.Projectile, {
     initialize: function () {
 
     }

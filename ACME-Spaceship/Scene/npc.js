@@ -1,4 +1,5 @@
-﻿var NPC = Class.create(SelfControlledObject, {
+﻿var Scene = Scene || {};
+Scene.NPC = Class.create(Scene.SelfControlledObject, {
     initialize: function () {
 
     }

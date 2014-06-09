@@ -1,33 +1,33 @@
 ﻿var Movement = Class.create({
-    initialize: function (screenWidth, screenHeight, speed) {
-        this.screenWidth = screenWidth;
-        this.screenHeight = screenHeight;
+    initialize: function (speed) {
+        //this.screenWidth = screenWidth;
+        //this.screenHeight = screenHeight;
         this.speed = speed;
         this.positionX = 0.0;// Random between 0 screenWidth?
         this.positionY = 0.0;
     },
     getNextMove: function () {
-        if (this.positionX < 0 || this.positionX > this.screenWidth) {
-            throw "Charecter went outside the screen";
-        }
-        if (this.positionY < 0 || this.positionY > this.screenHeight) {
-            throw "Charecter went outside the screen";
-        }
+        //if (this.positionX < 0 || this.positionX > this.screenWidth) {
+        //    throw "Charecter went outside the screen";
+        //}
+        //if (this.positionY < 0 || this.positionY > this.screenHeight) {
+        //    throw "Charecter went outside the screen";
+        //}
     },
-    isInsideScreen: function (x, y) {
-        if (x < 0 || x > this.screenWidth) {
-            return false;
-        }
-        if (y < 0 || y > this.screenHeight) {
-            return false;
-        }
-        return true;
-    }
+    //isInsideScreen: function (x, y) {
+    //    if (x < 0 || x > this.screenWidth) {
+    //        return false;
+    //    }
+    //    if (y < 0 || y > this.screenHeight) {
+    //        return false;
+    //    }
+    //    return true;
+    //}
 });
 
 var StraightMove = Class.create(Movement, {
-    initialize: function ($super, screenWidth, screenHeight, speed) {
-        $super(screenWidth, screenHeight, speed);
+    initialize: function ($super, speed) {
+        $super(speed);
     },
     getNextMove: function ($super) {
         this.positionY += this.speed;
@@ -40,8 +40,8 @@ var StraightMove = Class.create(Movement, {
 });
 
 var ZigZagMove = Class.create(Movement, {
-    initialize: function ($super, screenWidth, screenHeight, speed, zigZagLength) {
-        $super(screenWidth, screenHeight, speed);
+    initialize: function ($super, speed, zigZagLength) {
+        $super(speed);
         this.zigZagLength = zigZagLength;
         this.direction = 1;
         this.stepsLeft = 0;
@@ -66,8 +66,8 @@ var ZigZagMove = Class.create(Movement, {
 });
 
 var FollowShipMove = Class.create(Movement, {
-    initialize: function ($super, screenWidth, screenHeight, speed) {
-        $super(screenWidth, screenHeight, speed);
+    initialize: function ($super, speed) {
+        $super(speed);
     },
     getNextMove: function ($super, shipX) {
         if (shipX < this.positionX) {

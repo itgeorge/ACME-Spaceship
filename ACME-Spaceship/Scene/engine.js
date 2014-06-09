@@ -1,10 +1,126 @@
-﻿var Engine = Class.create({    
-    initialize: function(gameLogic) {
-        this.gameLogic = gameLogic;
-        this.enemies = [];
-    },
-    spawnEnemies: function spawnEnemies() {
-        var newEnemies = this.gameLogic.getNewEnemies(this.enemies);
-        this.enemies.push.apply(this.enemies, newEnemies);
-    }
-});
+﻿/// <reference path="player-ship.js" />
+/// <reference path="game-object.js" />
+var Scene = Scene || {};
+Scene.Engine = (function () {
+    var Engine = Class.create({
+        initialize: function (worldWidth, worldHeight, renderer, gameLogic, interval) {
+            this.worldWidth = worldWidth;
+            this.worldHeight = worldHeight;
+            this.gameLogic = gameLogic;
+            this.renderer = renderer;
+            this.interval = interval;
+
+            this.all = [];
+            this.player = {};
+            this.enemies = {};
+            this.pickups = {};
+            this.projectiles = {};
+
+            this.pressedKeysByCode = [];
+        },
+        _spawnEnemies: function spawnEnemies() {
+            if (this.gameLogic) {
+                var newEnemies = this.gameLogic.getNewEnemies(this.enemies);
+                //this.enemies.push.apply(this.enemies, newEnemies);
+
+                for (var i = 0; i < newEnemies.length; i++) {
+                    var enemy = newEnemies[i];
+                    this._addObj(enemy);
+                }
+            }
+        },
+        _render: function render() {
+            this.renderer.renderAll(this.all);
+        },
+        _addObj: function addObj(obj) {
+            if (obj.type == Scene.GameObjectType.ENEMY_SHIP) {
+                this.enemies[obj.id] = obj;
+            } else if (obj.type == Scene.GameObjectType.PICK_UP) {
+                this.pickups[obj.id] = obj;
+            } else if (obj.type == Scene.GameObjectType.PROJECTILE) {
+                this.projectiles[obj.id] = obj;
+            } else if (obj.type == Scene.GameObjectType.PLAYER_SHIP) {
+                this.player = obj;
+            }
+
+            this.all.push(obj);
+        },
+        _removeObj: function removeObj(obj, indexInAll) {
+            if (indexInAll) {
+                this.this.all.splice(i, 1);
+            } else {
+                throw "IndexInAll required";
+            }
+
+            delete this.enemies[obj.id];
+            delete this.pickups[obj.id];
+            delete this.projectiles[obj.id];
+        },
+        _updateObjs: function updateObjs() {
+            var newObjs = [];
+            for (var i = 0; i < this.all.length; i++) {
+                newObjs.push.apply(newObjs, this.all[i].update());
+
+                if (this.all[i].hitpoints < 0) {
+                    this._removeObj(this.all[i], i);
+                }
+            }
+
+            for (var newI = 0; newI < newObjs.length; newI++) {
+                this._addObj(newObjs[newI]);
+            }
+        },
+        watchInput: function watchInput(pressedKeysByCode) {
+            this.pressedKeysByCode = pressedKeysByCode;
+        },
+        _processInput: function processInput() {
+            var keys = this.pressedKeysByCode;
+            //left
+            if (keys[37]) {
+                this.player.moveLeft();
+            }
+
+            //up
+            if (keys[38]) {
+                this.player.moveUp();
+            }
+
+            //right
+            if (keys[39]) {
+                this.player.moveRight();
+            }
+
+            //down
+            if (keys[40]) {
+                this.player.moveDown();
+            }
+
+            //v
+            if (keys[86]) {
+                this.player.fireLaser();
+            }
+
+            //spacebar
+            if (keys[32]) {
+                this.player.fireDefault();
+            }
+        },
+        run: function run() {
+            var self = this;
+
+            this.player = new Scene.PlayerShip(this.worldWidth / 2, this.worldHeight - this.worldHeight * 0.1);
+            this._addObj(this.player);
+
+            setInterval(function () {
+                self._render();
+                self._processInput();
+                self._updateObjs();
+                //TODO: check collisions
+                //TODO: remove objects died from collisions
+                self._spawnEnemies();
+            }, this.interval);
+        }
+    });
+
+    return Engine;
+})();

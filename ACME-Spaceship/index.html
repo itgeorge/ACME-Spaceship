@@ -5,14 +5,12 @@
     <!--Libs-->
     <script src="Scene/prototype.js"></script>
     
-    <!--Game-->
-    <script src="Scene/engine.js"></script>
-    <script src="Scene/renderer.js"></script>
+    <!--Game objects-->
+    <script src="Scene/game-object-render-type.js"></script>
+    <script src="Scene/game-object-type.js"></script>
     <script src="Scene/game-object.js"></script>
     <script src="Scene/movement.js"></script>
-    
-    <!--Game objects-->
-    <script src="Scene/player-ship.js"></script>
+
     <script src="Scene/self-controlled-object.js"></script>
     
     <script src="Scene/npc.js"></script>
@@ -26,6 +24,11 @@
     <script src="Scene/laser.js"></script>
     <script src="Scene/seeker.js"></script>
 
+    <script src="Scene/player-ship.js"></script>
+    <!--Game-->
+    <script src="Scene/engine.js"></script>
+    <script src="Scene/renderer.js"></script>
+
     <script src="Ui/main.js"></script>
 </head>
 <body onload="init(event)">
@@ -38,7 +41,12 @@
         </nav>
     </header>
     <div>
-        <canvas id="viewport"/>
+        <canvas width="800" height="640" id="viewport"></canvas>
+    </div>
+
+    <div id="image-resources" style="display: none;">
+        <img id="player-ship" src="images/player-ship.png"/>
+        <img id="bullet" src="images/player-ship.png"/>
     </div>
     <footer></footer>
 </body>

@@ -1,4 +1,5 @@
-﻿var Boss = Class.create(NPC, {
+﻿var Scene = Scene || {};
+Scene.Boss = Class.create(Scene.NPC, {
     initialize: function () {
 
     }
