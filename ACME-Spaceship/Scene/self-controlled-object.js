@@ -4,8 +4,8 @@
         this.movement = movement;
     },
     update: function update($super) {
-        var nextPos = this.movement.getNextMove();
-        this.moveTo(nextPos.x, nextPos.y);
+        var deltas = this.movement.getNextMove();
+        this.move(deltas.x, deltas.y);
 
         return $super();
     }

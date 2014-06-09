@@ -28,7 +28,7 @@ Scene.PlayerShip = (function () {
             this.move(0, psMaxSpeed);
         },
         fireDefault: function fireDefault() {
-            var bullet = new Scene.Bullet(this.x, this.y);
+            var bullet = new Scene.Bullet(this.x, this.y, true);
             this._addProduced(bullet);
         }
     })
