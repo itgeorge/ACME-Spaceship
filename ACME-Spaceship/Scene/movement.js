@@ -1,40 +1,22 @@
 ﻿var Movement = Class.create({
-    initialize: function (speed) {
-        //this.screenWidth = screenWidth;
-        //this.screenHeight = screenHeight;
+    initialize: function (speed, isMovingUp) {
         this.speed = speed;
-        this.positionX = 0.0;// Random between 0 screenWidth?
-        this.positionY = 0.0;
-    },
-    getNextMove: function () {
-        //if (this.positionX < 0 || this.positionX > this.screenWidth) {
-        //    throw "Charecter went outside the screen";
-        //}
-        //if (this.positionY < 0 || this.positionY > this.screenHeight) {
-        //    throw "Charecter went outside the screen";
-        //}
-    },
-    //isInsideScreen: function (x, y) {
-    //    if (x < 0 || x > this.screenWidth) {
-    //        return false;
-    //    }
-    //    if (y < 0 || y > this.screenHeight) {
-    //        return false;
-    //    }
-    //    return true;
-    //}
+        this.isMovingUp = isMovingUp;
+        this.direction = isMovingUp ? -1 : 1;
+        this.deltaX = 0.0;
+        this.deltaY = 0.0;
+    }
 });
 
 var StraightMove = Class.create(Movement, {
-    initialize: function ($super, speed) {
-        $super(speed);
+    initialize: function ($super, speed, isMovingUp) {
+        $super(speed, isMovingUp);
     },
-    getNextMove: function ($super) {
-        this.positionY += this.speed;
-        $super();
+    getNextMove: function () {
+        this.deltaY = this.speed * this.direction;
         return {
-            x: this.positionX,
-            y: this.positionY
+            x: this.deltaX,
+            y: this.deltaY
         };
     }
 });
@@ -43,24 +25,22 @@ var ZigZagMove = Class.create(Movement, {
     initialize: function ($super, speed, zigZagLength) {
         $super(speed);
         this.zigZagLength = zigZagLength;
-        this.direction = 1;
+        this.leftOrRight = 1;
         this.stepsLeft = 0;
-        this.stepsRight = 0;
+        this.deltaY = this.speed;
     },
-    getNextMove: function ($super) {
-        if (this.stepsLeft < this.zigZagLength) {// 0<5
+    getNextMove: function () {
+        if (this.stepsLeft < this.zigZagLength) {
             this.stepsLeft++;
-            this.positionX += this.direction * this.speed;
-        } else {// 5<5
-            this.direction *= -1;
+            this.deltaX = this.leftOrRight * this.speed;
+        } else {
+            this.leftOrRight *= -1;
             this.stepsLeft = 1;
-            this.positionX += this.direction * this.speed;
+            this.deltaX = this.leftOrRight * this.speed;
         }
-        this.positionY += this.speed;
-        $super();
         return {
-            x: this.positionX,
-            y: this.positionY
+            x: this.deltaX,
+            y: this.deltaY
         };
     }
 });
@@ -69,40 +49,34 @@ var FollowShipMove = Class.create(Movement, {
     initialize: function ($super, speed) {
         $super(speed);
     },
-    getNextMove: function ($super, shipX) {
-        if (shipX < this.positionX) {
-            this.positionX -= this.speed;
+    getNextMove: function ($super, follower, target) {
+        if (follower.x < target.x) {
+            this.deltaX = this.speed;
+        } else {
+            this.deltaX = (-1) * this.speed;
         }
-        if (shipX > this.positionX) {
-            this.positionX += this.speed;
+
+        if (follower.y < target.y) {
+            this.deltaY = this.speed;
+        } else {
+            this.deltaY = (-1) * this.speed;
         }
-        this.positionY += this.speed;
-        $super();
         return {
-            x: this.positionX,
-            y: this.positionY
+            x: this.deltaX,
+            y: this.deltaY
         };
     }
 });
 
 //(function () {
-//    //ctor params (screenWidth, screenHeight, speed, zigZagLength)
-//    var shipA = new ZigZagMove(100, 200, 1, 5);
-//    //ctor params (screenWidth, screenHeight, speed)
-//    var shipB = new StraightMove(100, 200, 4);
-//    //ctor params (screenWidth, screenHeight, speed)
-//    var shipC = new FollowShipMove(100, 200, 2);
-//    //getNexMove(ship X coordinate);
-//    log(shipC.getNextMove(121));
-//    log(shipC.getNextMove(121));
-//    //...
-//    //enemy x is like ship x
-//    log(shipC.getNextMove(6));
-//    log(shipC.getNextMove(6));// x doesnt change
-
-//    for (var i = 0; i < 103; i++) {
-//        //log(shipA.getNextMove());
-//    }
+//    //ctor params (speed, zigZagLength)
+//    var shipA = new ZigZagMove(1, 5);
+//    //ctor params (speed, isMovingUp)
+//    var shipB = new StraightMove(4, false);
+//    //ctor params (speed)
+//    var shipC = new FollowShipMove(2);
+//    //getNexMove(follwer, target);
+//    log(shipC.getNextMove({x: 100, y:100}, {x:200,y:200}))
 //})();
 
 function log(msg) {
