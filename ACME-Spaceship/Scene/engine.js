@@ -46,8 +46,8 @@ Scene.Engine = (function () {
             this.all.push(obj);
         },
         _removeObj: function removeObj(obj, indexInAll) {
-            if (indexInAll) {
-                this.this.all.splice(i, 1);
+            if (indexInAll || indexInAll === 0) {
+                this.all.splice(indexInAll, 1);
             } else {
                 throw "IndexInAll required";
             }
@@ -61,8 +61,13 @@ Scene.Engine = (function () {
             for (var i = 0; i < this.all.length; i++) {
                 newObjs.push.apply(newObjs, this.all[i].update());
 
-                if (this.all[i].hitpoints < 0) {
-                    this._removeObj(this.all[i], i);
+                var currObj = this.all[i];
+                if (currObj.hitpoints < 0) {
+                    this._removeObj(currObj, i);
+                }
+
+                if (!this._isInsideWorld(currObj)) {
+                    this._removeObj(currObj, i);
                 }
             }
 
@@ -119,6 +124,17 @@ Scene.Engine = (function () {
                 //TODO: remove objects died from collisions
                 self._spawnEnemies();
             }, this.interval);
+        },
+        _isInsideWorld: function (obj) {
+            var x = obj.x;
+            var y = obj.y;
+            if (x < 0 || x > this.worldWidth) {
+                return false;
+            }
+            if (y < 0 || y > this.worldHeight) {
+                return false;
+            }
+            return true;
         }
     });
 
