@@ -23,7 +23,9 @@ Scene.GameObject = (function () {
             return this.id == otherObject.id;
         },
         update: function update(deltaTimeMs) {
-            return this.produced;
+            var producedToReturn = this.produced;
+            this.produced = [];
+            return producedToReturn;
         },
         move: function move(deltaX, deltaY) {
             this.x += this._limitToMaxSpeed(deltaX);
