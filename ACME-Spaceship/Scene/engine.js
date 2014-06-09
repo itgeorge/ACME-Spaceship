@@ -21,12 +21,13 @@ Scene.Engine = (function () {
         _spawnEnemies: function spawnEnemies() {
             if (this.gameLogic) {
                 var newEnemies = this.gameLogic.getNewEnemies(this.enemies);
-                //this.enemies.push.apply(this.enemies, newEnemies);
-
-                for (var i = 0; i < newEnemies.length; i++) {
-                    var enemy = newEnemies[i];
-                    this._addObj(enemy);
-                }
+                this._addMultipleObjs(newEnemies);
+            }
+        },
+        _spawnPickups: function spawnPickups() {
+            if (this.gameLogic) {
+                var newPickups = this.gameLogic.getNewPickups(this.pickups);
+                this._addMultipleObjs(newPickups);
             }
         },
         _render: function render() {
@@ -45,6 +46,13 @@ Scene.Engine = (function () {
 
             this.all.push(obj);
         },
+        _addMultipleObjs: function addMultipleObjs(objs) {
+            for (var i = 0; i < objs.length; i++) {
+                var obj = objs[i];
+                this._addObj(obj);
+            }
+        },
+
         _removeObj: function removeObj(obj, indexInAll) {
             if (indexInAll || indexInAll === 0) {
                 this.all.splice(indexInAll, 1);
@@ -62,7 +70,7 @@ Scene.Engine = (function () {
                 newObjs.push.apply(newObjs, this.all[i].update());
 
                 var currObj = this.all[i];
-                if (currObj.hitpoints < 0) {
+                if (currObj.hitpoints <= 0) {
                     this._removeObj(currObj, i);
                 }
 
@@ -123,6 +131,7 @@ Scene.Engine = (function () {
                 //TODO: check collisions
                 //TODO: remove objects died from collisions
                 self._spawnEnemies();
+                self._spawnPickups();
             }, this.interval);
         },
         _isInsideWorld: function (obj) {
