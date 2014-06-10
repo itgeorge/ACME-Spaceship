@@ -3,7 +3,7 @@ Scene.GameObject = (function () {
     var totalInstances = 0;
 
     var GameObject = Class.create({
-        initialize: function (x, y, radius, hitpoints, maxSpeed, type, renderType, parent) {
+        initialize: function (x, y, radius, hitpoints, maxSpeed, type, renderType) {
             this.id = totalInstances++;
 
             this.x = x;
@@ -13,7 +13,7 @@ Scene.GameObject = (function () {
             this.maxSpeed = maxSpeed;
             this.type = type;
             this.renderType = renderType
-            this.parent = parent;
+            this.parentId = -1;
             this.produced = [];
         },
         _addProduced: function (obj) {
@@ -46,11 +46,21 @@ Scene.GameObject = (function () {
             return sign * (absUnits > this.maxSpeed ? this.maxSpeed : absUnits);
         },
         hits: function hits(otherObject) {
-            var xDelta = this.x - otherObject.x;
-            var yDelta = this.y - otherObject.y;
-            var distSq = xDelta * xDelta + yDelta * yDelta;
+            if (this.parentId != otherObject.id && this.type != otherObject.type) {
+                var xDelta = this.x - otherObject.x;
+                var yDelta = this.y - otherObject.y;
+                var distSq = xDelta * xDelta + yDelta * yDelta;
+                var hitDist = this.radius + otherObject.radius
+                return distSq <=  hitDist * hitDist;
+            }
 
-            return distSq <= this.radius * this.radius;
+            return false;
+        },
+        takeDamage: function takeDamage(damage) {
+            this.hitpoints -= damage;
+        },
+        destroy: function destroy() {
+            this.hitpoints = 0;
         }
     });
 
