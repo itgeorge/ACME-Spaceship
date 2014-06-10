@@ -41,9 +41,9 @@ Scene.PlayerShip = (function () {
             var startY = this.y;
 
             for (var i = 0; i < length; i++) {
-                var part = new Scene.Laser(startX, startY - Scene.Laser.defaultRadius * i);
-                part.parentId = this.id;
-                this._produce(part);
+                var beamPart = new Scene.Laser(startX, startY - Scene.Laser.defaultRadius * i);
+                beamPart.parentId = this.id;
+                this._produce(beamPart);
             }
         },
         fireSeeker: function fireSeeker(target) {
