@@ -1,5 +1,6 @@
 ﻿var Scene = Scene || {};
 Scene.BonusType = {
     LASER: "laser",
-    SEEKER: "seeker"
+    SEEKER: "seeker",
+    SHIELD: "shield"
 }

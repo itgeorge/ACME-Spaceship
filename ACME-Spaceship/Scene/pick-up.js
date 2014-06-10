@@ -32,6 +32,11 @@ Scene.PickUp =
             return new PickUp(quantity,
                 getRandXCoord(minX, maxX), 1,
                 Scene.BonusType.LASER, Scene.GameObjectRenderType.LASER_BONUS);
+        },
+        getShield: function (quantity, minX, maxX) {
+            return new PickUp(quantity,
+                getRandXCoord(minX, maxX), 1,
+                Scene.BonusType.SHIELD, Scene.GameObjectRenderType.SHIELD_BONUS);
         }
     }
 })();

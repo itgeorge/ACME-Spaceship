@@ -18,7 +18,7 @@ Scene.GameLogic = Class.create({
         //TODO: this is for testing purposes, re-write more meaningful logic
         if (this.callForEnemiesCounter == Scene.GameLogicConstants.LEVEL_1_SPAWN_TIME - 1) {
             return Math.random() > 0.5 ?
-                [Scene.PickUp.getSeeker(10, 1, 800)] :
+                [Scene.PickUp.getShield(10, 1, 800)] :
                 [Scene.PickUp.getLaser(10, 1, 800)]
         }
 

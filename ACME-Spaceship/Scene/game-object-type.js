@@ -6,5 +6,5 @@ Scene.GameObjectType = {
     PICK_UP: "pick-up",
     PROJECTILE: "projectile",
     BACKGROUND_EFFECT: "background-effect",
-    FOREGROUND_EFFECT: "background-effect"
+    FOREGROUND_EFFECT: "foreground-effect"
 }

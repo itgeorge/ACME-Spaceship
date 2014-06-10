@@ -11,7 +11,9 @@ Scene.GameObjectRenderType = {
 
     SEEKER_BONUS: "seeker-bonus",
     LASER_BONUS: "laser-bonus",
+    SHIELD_BONUS: "shield-bonus",
 
     SEEKER_ATTACHMENT: "seeker-attachment",
-    LASER_ATTACHMENT: "laser-attachment"
+    LASER_ATTACHMENT: "laser-attachment",
+    SHIELD_ATTACHMENT: "shield-attachment" 
 }

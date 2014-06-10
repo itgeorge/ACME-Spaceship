@@ -27,6 +27,7 @@ Scene.PlayerShip = (function () {
 
             this.seekerAmmo = 0;
             this.laserAmmo = 0;
+            this.shield = 0;
 
             this.seekerCooldown = defaultSeekerCooldownFrames;
             this.gunCooldown = defaultGunCooldownFrames;
@@ -40,6 +41,11 @@ Scene.PlayerShip = (function () {
             if (this.laserAmmo > 0) {
                 this._produce(new Scene.WeaponAttachment(this.x + laserXOffset, this.y + laserYOffset,
                     Scene.GameObjectRenderType.LASER_ATTACHMENT));
+            }
+
+            if (this.shield > 0) {
+                this._produce(new Scene.WeaponAttachment(this.x, this.y,
+                    Scene.GameObjectRenderType.SHIELD_ATTACHMENT));
             }
 
             if (this.gunCooldown > 0) {
@@ -106,6 +112,16 @@ Scene.PlayerShip = (function () {
                 this.seekerAmmo += pickup.quantity;
             } else if (pickup.bonusType == Scene.BonusType.LASER) {
                 this.laserAmmo += pickup.quantity;
+            } else if (pickup.bonusType == Scene.BonusType.SHIELD) {
+                this.shield += pickup.quantity;
+            }
+        },
+        takeDamage: function takeDamage($super, damage) {
+            if (this.shield > 0) {
+                this.shield -= damage;
+            } else {
+                this.shield = 0;
+                $super(damage);
             }
         }
     })
