@@ -44,8 +44,10 @@ Scene.PlayerShip = (function () {
             }
 
             if (this.shield > 0) {
-                this._produce(new Scene.WeaponAttachment(this.x, this.y,
-                    Scene.GameObjectRenderType.SHIELD_ATTACHMENT));
+                var shieldAttachment = new Scene.WeaponAttachment(this.x, this.y,
+                    Scene.GameObjectRenderType.SHIELD_ATTACHMENT);
+                shieldAttachment.radius = this.radius;
+                this._produce(shieldAttachment);
             }
 
             if (this.gunCooldown > 0) {
