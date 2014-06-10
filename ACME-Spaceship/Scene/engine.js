@@ -68,6 +68,7 @@ Scene.Engine = (function () {
                     this.projectiles[obj.id] = obj;
                 } else if (obj.type == Scene.GameObjectType.PLAYER_SHIP) {
                     this.player = obj;
+                    this.gameLogic.watchPlayer(obj);
                 }
 
                 this.all.push(obj);
