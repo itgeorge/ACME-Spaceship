@@ -11,14 +11,8 @@ Scene.Renderer = Class.create({
 
         for (key in Scene.GameObjectRenderType) {
             var value = Scene.GameObjectRenderType[key];
-            this.typeImages[value] = document.getElementById(value) || null;
+            this.typeImages[value] = document.getElementById(value);
         }
-
-        //this.typeImages[Scene.GameObjectRenderType.PLAYER_SHIP] =
-        //    document.getElementById(Scene.GameObjectRenderType.PLAYER_SHIP);
-
-        //this.typeImages[Scene.GameObjectRenderType.BULLET] =
-        //    document.getElementById(Scene.GameObjectRenderType.BULLET);
     },
     renderAll: function renderAll(objs, clearScreen) {
         if (clearScreen) {
@@ -30,7 +24,7 @@ Scene.Renderer = Class.create({
             var obj = objs[i];
             var image = this.typeImages[obj.renderType];
 
-            this.ctx.drawImage(image, obj.x, obj.y, obj.radius, obj.radius);
+            this.ctx.drawImage(image, obj.x - obj.radius, obj.y - obj.radius, obj.radius * 2, obj.radius * 2);
         }
     }
 });
