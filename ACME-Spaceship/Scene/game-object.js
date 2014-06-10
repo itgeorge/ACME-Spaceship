@@ -1,6 +1,6 @@
 ﻿var Scene = Scene || {};
 Scene.GameObject = (function () {
-    var totalInstances
+    var totalInstances = 0;
 
     var GameObject = Class.create({
         initialize: function (x, y, radius, hitpoints, maxSpeed, type, renderType, parent) {
