@@ -30,8 +30,16 @@ Scene.GameLogic = (function () {
             this.enemies = {};
         },
         getNewPickups: function () {
+            
             if (Math.random() > 0.98) {
-                return Math.random() > 0.5 ? [Scene.PickUp.getSeeker(1, 1, 800)] : [Scene.PickUp.getLaser(1, 1, 800)];
+                var r = Math.random();
+                if (r < 0.3) {
+                    return [Scene.PickUp.getSeeker(10, 1, this.screenWidth)];
+                } else if (r < 0.6) {
+                    return [Scene.PickUp.getLaser(10, 1, this.screenWidth)];
+                } else {
+                    return [Scene.PickUp.getShield(10, 1, this.screenWidth)];
+                }
             }
 
             return [];
