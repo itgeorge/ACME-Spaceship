@@ -1,0 +1,58 @@
+@main-color: #50557f;
+@red-color: #FF2E70;
+@cyan-color: #2EFFDC;
+@min-width: 800px;
+
+header{
+	height: 80px;
+	background-color: @main-color;
+}
+
+.container{
+	display: block;
+	margin: auto;
+	width: @min-width;
+	position: relative;
+	margin-top: 40px;
+}
+
+
+
+.bar{
+	width: 210px;
+	height: 20px;
+	background: #333356;
+	border-radius: 10px;
+	top: 10px;
+
+	&.health{
+		position: absolute;
+		top: 10px;
+		left: 10px;
+
+		.indicator{
+			left: 5px;
+		}
+	}
+
+	&.shield{
+		position: absolute;
+		right: 10px;
+
+		.indicator{
+			right: 5px;
+			background-color: @cyan-color;
+		}
+	}
+
+	.indicator{
+		position: absolute;
+		width: 200px;
+		height: 10px;
+		top: 5px;
+		border-radius: 5px;
+		width: 200px;
+		background: @red-color;
+	}
+}
+

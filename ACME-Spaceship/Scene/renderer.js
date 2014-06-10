@@ -16,7 +16,7 @@ Scene.Renderer = Class.create({
     },
     renderAll: function renderAll(objs, clearScreen) {
         if (clearScreen) {
-            this.ctx.fillStyle = "#000000";
+            this.ctx.fillStyle = "#50557f";
             this.ctx.fillRect(0, 0, this.canvasEl.width, this.canvasEl.height);
         }
 
