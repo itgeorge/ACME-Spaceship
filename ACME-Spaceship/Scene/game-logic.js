@@ -3,15 +3,18 @@
 Scene.GameLogicConstants = {
     ENEMY_TYPE_1: { movement: 'streight', radius: 2, hitpoints: 1, maxSpeed: 1, renderType: Scene.GameObjectRenderType.ENEMY_SHIP },
     ENEMIES_LEVEL_1: 100,
-    LEVEL_1_SPAWN_TIME: 1000,
+    LEVEL_1_SPAWN_TIME: 100,
 };
-var GameLogic = Class.create({
+Scene.GameLogic = Class.create({
     initialize: function () {
         this.level = 1;
         this.isBossTime = false;
         this.callForEnemiesCounter = 0;
         this.enemiesCreated = 0;
         this.enemies = [];
+    },
+    getNewPickups: function () {
+        return [];
     },
     getNewEnemies: function (enemiesArray) {
         this.callForEnemiesCounter++;
@@ -68,23 +71,21 @@ var GameLogic = Class.create({
     }
 });
 
-var EnemyFactory = function () {
-    return {
-        //movement, x, y, radius, hitpoints, maxSpeed, renderType
-        getEasyEnemy: function () {
-            return new Scene.EnemyShip(new StraightMove(4, false), 100, 0, 1, 4, Scene.GameObjectRenderType.ENEMY_SHIP);
-        },
-        getMediumEnemy: function () {
-            return new Scene.EnemyShip();
-        },
-        getHardEnemy: function () {
-            return new Scene.EnemyShip();
-        },
-        getInsaneEnemy: function () {
-            return new Scene.EnemyShip();
-        },
-        getBoss: function () {
-            return new Scene.Boss();
-        },
-    };
-}
+var EnemyFactory = {
+    //movement, x, y, radius, hitpoints, maxSpeed, renderType
+    getEasyEnemy: function () {
+        return new Scene.EnemyShip(null, new StraightMove(4, false), 100, 1, 10, 4, 4, Scene.GameObjectType.ENEMY_SHIP, Scene.GameObjectRenderType.EASY_ENEMY);
+    },
+    getMediumEnemy: function () {
+        return new Scene.EnemyShip();
+    },
+    getHardEnemy: function () {
+        return new Scene.EnemyShip();
+    },
+    getInsaneEnemy: function () {
+        return new Scene.EnemyShip();
+    },
+    getBoss: function () {
+        return new Scene.Boss();
+    },
+};

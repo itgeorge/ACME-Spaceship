@@ -4,5 +4,6 @@ Scene.GameObjectType = {
     ENEMY_SHIP: "enemy",
     BOSS_SHIP: "boss",
     PICK_UP: "pick-up",
-    PROJECTILE: "projectile"
+    PROJECTILE: "projectile",
+    BACKGROUND_EFFECT: "background-effect"
 }

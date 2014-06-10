@@ -1,4 +1,5 @@
-﻿/// <reference path="player-ship.js" />
+﻿/// <reference path="star.js" />
+/// <reference path="player-ship.js" />
 /// <reference path="game-object.js" />
 var Scene = Scene || {};
 Scene.Engine = (function () {
@@ -10,6 +11,7 @@ Scene.Engine = (function () {
             this.renderer = renderer;
             this.interval = interval;
 
+            this.bgrEffects= [];
             this.all = [];
             this.player = {};
             this.enemies = {};
@@ -30,8 +32,24 @@ Scene.Engine = (function () {
                 this._addMultipleObjs(newPickups);
             }
         },
+        _spawnEffects: function spawnEffects() {
+            var rand = Math.random();
+            if (rand < 0.33) {
+                this._addEffect(Scene.Star.getSmall(0, this.worldWidth));
+            } else if (rand < 0.66) {
+                this._addEffect(Scene.Star.getMedium(0, this.worldWidth));
+            } else if (rand < 1) {
+                this._addEffect(Scene.Star.getLarge(0, this.worldWidth));
+            }
+        },
         _render: function render() {
-            this.renderer.renderAll(this.all);
+            this.renderer.renderAll(this.bgrEffects, true)
+            this.renderer.renderAll(this.all, false);
+        },
+        _addEffect: function addEffect(obj) {
+            if (obj.type == Scene.GameObjectType.BACKGROUND_EFFECT) {
+                this.bgrEffects.push(obj);
+            }
         },
         _addObj: function addObj(obj) {
             if (obj.type == Scene.GameObjectType.ENEMY_SHIP) {
@@ -52,7 +70,6 @@ Scene.Engine = (function () {
                 this._addObj(obj);
             }
         },
-
         _removeObj: function removeObj(obj, indexInAll) {
             if (indexInAll || indexInAll === 0) {
                 this.all.splice(indexInAll, 1);
@@ -81,6 +98,15 @@ Scene.Engine = (function () {
 
             for (var newI = 0; newI < newObjs.length; newI++) {
                 this._addObj(newObjs[newI]);
+            }
+        },
+        _updateEffects: function updateEffects() {
+            for (var i = 0; i < this.bgrEffects.length; i++) {
+                this.bgrEffects[i].update();
+
+                if (!this._isInsideWorld(this.bgrEffects[i])) {
+                    this.bgrEffects.splice(i, 1);
+                }
             }
         },
         watchInput: function watchInput(pressedKeysByCode) {
@@ -128,10 +154,12 @@ Scene.Engine = (function () {
                 self._render();
                 self._processInput();
                 self._updateObjs();
+                self._updateEffects();
                 //TODO: check collisions
                 //TODO: remove objects died from collisions
                 self._spawnEnemies();
                 self._spawnPickups();
+                self._spawnEffects();
             }, this.interval);
         },
         _isInsideWorld: function (obj) {

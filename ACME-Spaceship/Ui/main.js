@@ -1,4 +1,5 @@
 ﻿/// <reference path="../Scene/renderer.js" />
+/// <reference path="../Scene/game-logic.js" />
 function init() {
     //CONST
     var screenWidth = 800;
@@ -7,7 +8,8 @@ function init() {
     //INIT
     var canvasEl = document.getElementById("viewport");
     var renderer = new Scene.Renderer(canvasEl);
-    var engine = new Scene.Engine(canvasEl.width, canvasEl.height, renderer, null, 30);
+    var gameLogic = new Scene.GameLogic();
+    var engine = new Scene.Engine(canvasEl.width, canvasEl.height, renderer, gameLogic, 30);
 
     engine.run();
     //EVENTS

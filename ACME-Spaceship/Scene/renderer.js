@@ -9,16 +9,23 @@ Scene.Renderer = Class.create({
         this.renderObjects = [];
         this.typeImages = {};
 
-        this.typeImages[Scene.GameObjectRenderType.PLAYER_SHIP] =
-            document.getElementById(Scene.GameObjectRenderType.PLAYER_SHIP);
+        for (key in Scene.GameObjectRenderType) {
+            var value = Scene.GameObjectRenderType[key];
+            this.typeImages[value] = document.getElementById(value) || null;
+        }
 
-        this.typeImages[Scene.GameObjectRenderType.BULLET] =
-            document.getElementById(Scene.GameObjectRenderType.BULLET);
+        //this.typeImages[Scene.GameObjectRenderType.PLAYER_SHIP] =
+        //    document.getElementById(Scene.GameObjectRenderType.PLAYER_SHIP);
+
+        //this.typeImages[Scene.GameObjectRenderType.BULLET] =
+        //    document.getElementById(Scene.GameObjectRenderType.BULLET);
     },
-    renderAll: function renderAll(objs) {
-        this.ctx.fillStyle = "#000000";
-        this.ctx.fillRect(0, 0, this.canvasEl.width, this.canvasEl.height);
-        
+    renderAll: function renderAll(objs, clearScreen) {
+        if (clearScreen) {
+            this.ctx.fillStyle = "#000000";
+            this.ctx.fillRect(0, 0, this.canvasEl.width, this.canvasEl.height);
+        }
+
         for (var i = 0; i < objs.length; i++) {
             var obj = objs[i];
             var image = this.typeImages[obj.renderType];
