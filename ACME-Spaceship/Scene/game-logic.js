@@ -20,7 +20,7 @@ Scene.GameLogic = Class.create({
         this.callForEnemiesCounter++;
 
         var enemiesAlive = Object.keys(enemiesArray).length;
-        if (enemiesAlive == 0 && this.enemiesCreated > 0) {
+        if (enemiesAlive == 0 && this.enemiesCreated > Scene.GameLogicConstants.ENEMIES_LEVEL_1) {
             this.isBossTime = true;
         }
 
