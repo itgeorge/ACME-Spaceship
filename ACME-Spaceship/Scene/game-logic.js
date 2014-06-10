@@ -41,7 +41,7 @@ Scene.GameLogic = Class.create({
                     }
                 } else {
                     this.isBossTime = false;
-                    return EnemyFactory.getBoss();
+                    return [EnemyFactory.getBoss()];
                 }
                 break;
             case 2:

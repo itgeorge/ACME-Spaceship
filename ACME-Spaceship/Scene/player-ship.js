@@ -1,4 +1,5 @@
-﻿/// <reference path="laser.js" />
+﻿/// <reference path="seeker.js" />
+/// <reference path="laser.js" />
 /// <reference path="bullet.js" />
 /// <reference path="game-object-type.js" />
 /// <reference path="game-object.js" />
@@ -29,7 +30,9 @@ Scene.PlayerShip = (function () {
             this.move(0, psMaxSpeed);
         },
         fireDefault: function fireDefault() {
-            var bullet = new Scene.Bullet(this.x, this.y, true);
+            var startX = this.x;
+            var startY = this.y;
+            var bullet = new Scene.Bullet(startX, startY, true);
             bullet.parentId = this.id;
             this._addProduced(bullet);
         },
@@ -42,6 +45,13 @@ Scene.PlayerShip = (function () {
                 part.parentId = this.id;
                 this._addProduced(part);
             }
+        },
+        fireSeeker: function fireSeeker(target) {
+            var startX = this.x;
+            var startY = this.y;
+            var seeker = new Scene.Seeker(target, startX, startY);
+            seeker.parentId = this.id;
+            this._addProduced(seeker);
         }
     })
 })();

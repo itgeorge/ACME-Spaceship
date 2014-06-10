@@ -136,6 +136,11 @@ Scene.Engine = (function () {
                 this.player.moveDown();
             }
 
+            //b
+            if (keys[66]) {
+                this.player.fireSeeker(this._getClosestEnemy());
+            }
+
             //v
             if (keys[86]) {
                 var length = this.worldHeight / Scene.Laser.defaultRadius;
@@ -200,6 +205,25 @@ Scene.Engine = (function () {
             }
 
             return pairs;
+        },
+        _getClosestEnemy: function getClosestEnemy() {
+            var minDistSq = this.worldWidth * this.worldWidth + this.worldHeight * this.worldHeight;
+            var closestEnemy = null;
+
+            for (var enemyId in this.enemies) {
+                var enemy = this.enemies[enemyId];
+
+                var deltaX = this.player.x - enemy.x;
+                var deltaY = this.player.y - enemy.y;
+
+                var distSq = deltaX * deltaX + deltaY * deltaY;
+                if (distSq < minDistSq) {
+                    minDistSq = distSq;
+                    closestEnemy = enemy;
+                }
+            }
+
+            return closestEnemy;
         },
         run: function run() {
             var self = this;
