@@ -4,7 +4,7 @@ var Scene = Scene || {};
 Scene.Seeker =
 (function () {
     var radius = 10;
-    var speed = 3;
+    var speed = 5;
     var damage = 20;
 
     return Seeker = Class.create(Scene.Projectile, {
@@ -13,11 +13,16 @@ Scene.Seeker =
                 Scene.GameObjectRenderType.SEEKER);
 
             this.followedShip = followedShip;
+            this.lastMove = { x: 0, y: -speed };
         },
         _getMoveFromStrategy: function ($super) {
-            return this.movement.getNextMove(
-                { x: this.x, y: this.y },
-                { x: this.followedShip.x, y: this.followedShip.y });
+            if (this.followedShip && this.followedShip.hitpoints > 0) {
+                this.lastMove = this.movement.getNextMove(
+                    { x: this.x, y: this.y },
+                    { x: this.followedShip.x, y: this.followedShip.y });
+            }
+
+            return this.lastMove;
         }
     });
 })();
