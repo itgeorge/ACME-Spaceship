@@ -7,6 +7,7 @@
         this.deltaY = 0.0;
     }
 });
+
 var SimpleMove = Class.create(Movement, {    
    initialize: function($super, speed, x, y) {
        $super(speed);
