@@ -17,6 +17,9 @@ Scene.PlayerShip = (function () {
     var laserXOffset = 20;
     var laserYOffset = 0;
 
+    var defaultSeekerCooldownFrames = 30;
+    var defaultGunCooldownFrames = 30;
+
     return Class.create(Scene.GameObject, {
         initialize: function ($super, x, y) {
             $super(x, y, psRadius, psHP, psMaxSpeed,
@@ -24,6 +27,9 @@ Scene.PlayerShip = (function () {
 
             this.seekerAmmo = 0;
             this.laserAmmo = 0;
+
+            this.seekerCooldown = defaultSeekerCooldownFrames;
+            this.gunCooldown = defaultGunCooldownFrames;
         },
         update: function update($super) {
             if (this.seekerAmmo > 0) {
@@ -34,6 +40,14 @@ Scene.PlayerShip = (function () {
             if (this.laserAmmo > 0) {
                 this._produce(new Scene.WeaponAttachment(this.x + laserXOffset, this.y + laserYOffset,
                     Scene.GameObjectRenderType.LASER_ATTACHMENT));
+            }
+
+            if (this.gunCooldown > 0) {
+                this.gunCooldown--;
+            }
+
+            if (this.seekerCooldown > 0) {
+                this.seekerCooldown--;
             }
 
             return $super();
@@ -50,12 +64,16 @@ Scene.PlayerShip = (function () {
         moveDown: function moveDown() {
             this.move(0, psMaxSpeed);
         },
-        fireDefault: function fireDefault() {
-            var startX = this.x;
-            var startY = this.y;
-            var bullet = new Scene.Bullet(startX, startY, true);
-            bullet.parentId = this.id;
-            this._produce(bullet);
+        fireGun: function fireGun() {
+            if (this.gunCooldown == 0) {
+                var startX = this.x;
+                var startY = this.y;
+                var bullet = new Scene.Bullet(startX, startY, true);
+                bullet.parentId = this.id;
+                this._produce(bullet);
+
+                this.gunCooldown = defaultGunCooldownFrames;
+            }
         },
         fireLaser: function fireLaser(length) {
             if (this.laserAmmo > 0) {
@@ -72,13 +90,14 @@ Scene.PlayerShip = (function () {
             }
         },
         fireSeeker: function fireSeeker(target) {
-            if (this.seekerAmmo > 0) {
+            if (this.seekerAmmo > 0 && this.seekerCooldown == 0) {
                 var startX = this.x + seekerXOffset;
                 var startY = this.y + seekerYOffset;
                 var seeker = new Scene.Seeker(target, startX, startY);
                 seeker.parentId = this.id;
                 this._produce(seeker);
 
+                this.seekerCooldown = defaultSeekerCooldownFrames;
                 this.seekerAmmo--;
             }
         },

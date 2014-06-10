@@ -169,7 +169,7 @@ Scene.Engine = (function () {
 
             //spacebar
             if (keys[32]) {
-                this.player.fireDefault();
+                this.player.fireGun();
             }
         },
         _processCollisions: function processCollisions() {
