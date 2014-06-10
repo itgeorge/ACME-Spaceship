@@ -4,8 +4,10 @@
         this.movement = movement;
     },
     update: function update($super) {
-        var deltas = this.movement.getNextMove();
-        this.move(deltas.x, deltas.y);
+        if (this.movement) {
+            var deltas = this.movement.getNextMove();
+            this.move(deltas.x, deltas.y);
+        }
 
         return $super();
     }

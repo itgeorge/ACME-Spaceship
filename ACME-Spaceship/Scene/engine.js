@@ -34,9 +34,9 @@ Scene.Engine = (function () {
         },
         _spawnEffects: function spawnEffects() {
             var rand = Math.random();
-            if (rand < 0.33) {
+            if (rand < 0.5) {
                 this._addEffect(Scene.Star.getSmall(0, this.worldWidth));
-            } else if (rand < 0.66) {
+            } else if (rand < 0.88) {
                 this._addEffect(Scene.Star.getMedium(0, this.worldWidth));
             } else if (rand < 1) {
                 this._addEffect(Scene.Star.getLarge(0, this.worldWidth));
@@ -87,12 +87,14 @@ Scene.Engine = (function () {
                 newObjs.push.apply(newObjs, this.all[i].update());
 
                 var currObj = this.all[i];
-                if (currObj.hitpoints <= 0) {
-                    this._removeObj(currObj, i);
-                }
 
                 if (!this._isInsideWorld(currObj)) {
+                    currObj.destroy();
+                }
+
+                if (currObj.hitpoints <= 0) {
                     this._removeObj(currObj, i);
+                    i--;
                 }
             }
 
@@ -136,13 +138,68 @@ Scene.Engine = (function () {
 
             //v
             if (keys[86]) {
-                this.player.fireLaser();
+                var length = this.worldHeight / Scene.Laser.defaultRadius;
+                length = length | 0; //fast converting to integer
+                this.player.fireLaser(length);
             }
 
             //spacebar
             if (keys[32]) {
                 this.player.fireDefault();
             }
+        },
+        _processCollisions: function processCollisions() {
+            var playerById = {};
+            playerById[this.player.id] = this.player;
+            var playerPickupsPairs = this._getCollisionPairs(playerById, this.pickups);
+            var playerEnemiesPairs = this._getCollisionPairs(playerById, this.enemies);
+            var projectilesPlayerPairs = this._getCollisionPairs(this.projectiles, playerById);
+            var projectilesEnemiesPairs = this._getCollisionPairs(this.projectiles, this.enemies);
+
+            this._processPlayerPickupsPairs(playerPickupsPairs);
+            this._processPlayerEnemiesPairs(playerEnemiesPairs);
+            this._processProjectilesShipsPairs(projectilesPlayerPairs);
+            this._processProjectilesShipsPairs(projectilesEnemiesPairs);
+        },
+        _processPlayerPickupsPairs: function processPlayerPickupsPairs(pairs) {
+            for (var i = 0; i < pairs.length; i++) {
+                //Add pickups to player
+            }
+        },
+        _processPlayerEnemiesPairs: function processPlayerEnemiesPairs(pairs) {
+            for (var i = 0; i < pairs.length; i++) {
+                var pair = pairs[i];
+                var aHP = pair.a.hitpoints;
+                var bHP = pair.b.hitpoints;
+                pair.a.takeDamage(bHP);
+                pair.b.takeDamage(aHP);
+            }
+        },
+        _processProjectilesShipsPairs: function processProjectilesShipsPairs(pairs) {
+            for (var i = 0; i < pairs.length; i++) {
+                var pair = pairs[i];
+                pair.b.takeDamage(pair.a.damage);
+                pair.a.destroy();
+            }
+        },
+        _getCollisionPairs: function (aObjsById, bObjsById) {
+            var pairs = [];
+
+            for (aId in aObjsById) {
+                for (bId in bObjsById) {
+                    var a = aObjsById[aId];
+                    var b = bObjsById[bId];
+
+                    if (a.hits(b)) {
+                        pairs.push({
+                            a: a,
+                            b: b
+                        });
+                    }
+                }
+            }
+
+            return pairs;
         },
         run: function run() {
             var self = this;
@@ -153,10 +210,9 @@ Scene.Engine = (function () {
             setInterval(function () {
                 self._render();
                 self._processInput();
+                self._processCollisions();
                 self._updateObjs();
                 self._updateEffects();
-                //TODO: check collisions
-                //TODO: remove objects died from collisions
                 self._spawnEnemies();
                 self._spawnPickups();
                 self._spawnEffects();

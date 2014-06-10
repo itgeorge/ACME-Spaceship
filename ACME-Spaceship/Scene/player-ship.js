@@ -1,10 +1,11 @@
-﻿/// <reference path="bullet.js" />
+﻿/// <reference path="laser.js" />
+/// <reference path="bullet.js" />
 /// <reference path="game-object-type.js" />
 /// <reference path="game-object.js" />
 Scene = Scene || {};
 Scene.PlayerShip = (function () {
     var psRadius = 20;
-    var psHP = 400;
+    var psHP = 4;
     var psMaxSpeed = 5;
 
     return Class.create(Scene.GameObject, {
@@ -29,7 +30,18 @@ Scene.PlayerShip = (function () {
         },
         fireDefault: function fireDefault() {
             var bullet = new Scene.Bullet(this.x, this.y, true);
+            bullet.parentId = this.id;
             this._addProduced(bullet);
+        },
+        fireLaser: function fireLaser(length) {
+            var startX = this.x;
+            var startY = this.y;
+
+            for (var i = 0; i < length; i++) {
+                var part = new Scene.Laser(startX, startY - Scene.Laser.defaultRadius * i);
+                part.parentId = this.id;
+                this._addProduced(part);
+            }
         }
     })
 })();
