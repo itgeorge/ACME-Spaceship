@@ -226,11 +226,6 @@ Scene.GameLogic = (function () {
         },
         getHardEnemy: function () {
             var x = getRandXCoord(1, this.screenWidth);
-            var zigLen = getRandXCoord(1, 10);
-            return new Scene.EnemyShip(null, new ZigZagMove(8, zigLen), x, 1, 10, 4, 4, Scene.GameObjectType.ENEMY_SHIP, Scene.GameObjectRenderType.HARD_ENEMY);
-        },
-        getInsaneEnemy: function () {
-            var x = getRandXCoord(1, this.screenWidth);
             return new Scene.EnemyShip(null, new FollowShipMove(6), x, 1, 10, 4, 4, Scene.GameObjectType.ENEMY_SHIP, Scene.GameObjectRenderType.INSANE_ENEMY);
         },
         getBoss: function () {
