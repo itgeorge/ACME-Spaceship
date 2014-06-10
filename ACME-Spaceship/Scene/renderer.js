@@ -20,11 +20,24 @@ Scene.Renderer = Class.create({
             this.ctx.fillRect(0, 0, this.canvasEl.width, this.canvasEl.height);
         }
 
+        var playerShip = null;
+
         for (var i = 0; i < objs.length; i++) {
             var obj = objs[i];
-            var image = this.typeImages[obj.renderType];
 
-            this.ctx.drawImage(image, obj.x - obj.radius, obj.y - obj.radius, obj.radius * 2, obj.radius * 2);
+            if (obj.renderType != Scene.GameObjectRenderType.PLAYER_SHIP) {
+                this._drawObj(obj);
+            } else {
+                playerShip = obj;
+            }
         }
+
+        if (playerShip) {
+            this._drawObj(playerShip);
+        }
+    },
+    _drawObj: function drawObj(obj) {
+        var image = this.typeImages[obj.renderType];
+        this.ctx.drawImage(image, obj.x - obj.radius, obj.y - obj.radius, obj.radius * 2, obj.radius * 2);
     }
 });

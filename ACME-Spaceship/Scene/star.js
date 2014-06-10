@@ -3,10 +3,11 @@
 /// <reference path="self-controlled-object.js" />
 /// <reference path="game-object-type.js" />
 Scene.Star = (function () {
-    
+    var hp = 1;
+
     var Star = Class.create(Scene.SelfControlledObject, {
         initialize: function ($super, movement, x, y, radius) {
-            $super(movement, x, y, radius, 1, movement.speed, Scene.GameObjectType.BACKGROUND_EFFECT, Scene.GameObjectRenderType.STAR);
+            $super(movement, x, y, radius, hp, movement.speed, Scene.GameObjectType.BACKGROUND_EFFECT, Scene.GameObjectRenderType.STAR);
         },
     });
 

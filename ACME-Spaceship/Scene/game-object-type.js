@@ -5,5 +5,6 @@ Scene.GameObjectType = {
     BOSS_SHIP: "boss",
     PICK_UP: "pick-up",
     PROJECTILE: "projectile",
-    BACKGROUND_EFFECT: "background-effect"
+    BACKGROUND_EFFECT: "background-effect",
+    FOREGROUND_EFFECT: "background-effect"
 }

@@ -59,6 +59,7 @@
   <ItemGroup>
     <Content Include="index.html" />
     <Content Include="images\player-ship.png" />
+    <Content Include="Scene\bonus-type.js" />
     <Content Include="Scene\boss.js" />
     <Content Include="Scene\bullet.js" />
     <Content Include="Scene\enemy-ship.js" />
@@ -78,6 +79,7 @@
     <Content Include="Scene\seeker.js" />
     <Content Include="Scene\self-controlled-object.js" />
     <Content Include="Scene\star.js" />
+    <Content Include="Scene\weapon-attachment.js" />
     <Content Include="Ui\main.js" />
     <Content Include="Web.config" />
   </ItemGroup>

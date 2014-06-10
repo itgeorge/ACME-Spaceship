@@ -61,6 +61,9 @@ Scene.GameObject = (function () {
         },
         destroy: function destroy() {
             this.hitpoints = 0;
+        },
+        isDestroyed: function isDestroyed() {
+            return this.hitpoints <= 0;
         }
     });
 

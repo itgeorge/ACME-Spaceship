@@ -7,5 +7,11 @@ Scene.GameObjectRenderType = {
     BULLET: "bullet",
     SEEKER: "seeker",
     LASER: "laser",
-    STAR: "star"
+    STAR: "star",
+
+    SEEKER_BONUS: "seeker-bonus",
+    LASER_BONUS: "laser-bonus",
+
+    SEEKER_ATTACHMENT: "seeker-attachment",
+    LASER_ATTACHMENT: "laser-attachment"
 }

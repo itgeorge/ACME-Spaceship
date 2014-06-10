@@ -11,7 +11,8 @@ Scene.Engine = (function () {
             this.renderer = renderer;
             this.interval = interval;
 
-            this.bgrEffects= [];
+            this.bgrEffects = [];
+            this.fgrEffects = [];
             this.all = [];
             this.player = {};
             this.enemies = {};
@@ -43,26 +44,34 @@ Scene.Engine = (function () {
             }
         },
         _render: function render() {
-            this.renderer.renderAll(this.bgrEffects, true)
+            this.renderer.renderAll(this.bgrEffects, true);
+            this.renderer.renderAll(this.fgrEffects, false);
             this.renderer.renderAll(this.all, false);
         },
         _addEffect: function addEffect(obj) {
             if (obj.type == Scene.GameObjectType.BACKGROUND_EFFECT) {
                 this.bgrEffects.push(obj);
+            } else if (obj.type == Scene.GameObjectType.FOREGROUND_EFFECT) {
+                this.fgrEffects.push(obj);
             }
         },
         _addObj: function addObj(obj) {
-            if (obj.type == Scene.GameObjectType.ENEMY_SHIP) {
-                this.enemies[obj.id] = obj;
-            } else if (obj.type == Scene.GameObjectType.PICK_UP) {
-                this.pickups[obj.id] = obj;
-            } else if (obj.type == Scene.GameObjectType.PROJECTILE) {
-                this.projectiles[obj.id] = obj;
-            } else if (obj.type == Scene.GameObjectType.PLAYER_SHIP) {
-                this.player = obj;
-            }
+            if (obj.type == Scene.GameObjectType.BACKGROUND_EFFECT ||
+                obj.type == Scene.GameObjectType.FOREGROUND_EFFECT) {
+                this._addEffect(obj);
+            } else {
+                if (obj.type == Scene.GameObjectType.ENEMY_SHIP) {
+                    this.enemies[obj.id] = obj;
+                } else if (obj.type == Scene.GameObjectType.PICK_UP) {
+                    this.pickups[obj.id] = obj;
+                } else if (obj.type == Scene.GameObjectType.PROJECTILE) {
+                    this.projectiles[obj.id] = obj;
+                } else if (obj.type == Scene.GameObjectType.PLAYER_SHIP) {
+                    this.player = obj;
+                }
 
-            this.all.push(obj);
+                this.all.push(obj);
+            }
         },
         _addMultipleObjs: function addMultipleObjs(objs) {
             for (var i = 0; i < objs.length; i++) {
@@ -92,7 +101,7 @@ Scene.Engine = (function () {
                     currObj.destroy();
                 }
 
-                if (currObj.hitpoints <= 0) {
+                if (currObj.isDestroyed()) {
                     this._removeObj(currObj, i);
                     i--;
                 }
@@ -102,12 +111,22 @@ Scene.Engine = (function () {
                 this._addObj(newObjs[newI]);
             }
         },
-        _updateEffects: function updateEffects() {
-            for (var i = 0; i < this.bgrEffects.length; i++) {
-                this.bgrEffects[i].update();
+        _updateAllEffects: function updateAllEffects() {
+            this._updateEffects(this.bgrEffects);
+            this._updateEffects(this.fgrEffects);
+        },
+        _updateEffects: function updateEffects(effects) {
+            for (var i = 0; i < effects.length; i++) {
+                var currEffect = effects[i];
+                currEffect.update();
 
                 if (!this._isInsideWorld(this.bgrEffects[i])) {
-                    this.bgrEffects.splice(i, 1);
+                    currEffect.destroy();
+                }
+
+                if (currEffect.isDestroyed()) {
+                    effects.splice(i, 1);
+                    i--;
                 }
             }
         },
@@ -168,7 +187,9 @@ Scene.Engine = (function () {
         },
         _processPlayerPickupsPairs: function processPlayerPickupsPairs(pairs) {
             for (var i = 0; i < pairs.length; i++) {
-                //Add pickups to player
+                var pair = pairs[i];
+                pair.a.gatherPickup(pair.b);
+                pair.b.destroy();
             }
         },
         _processPlayerEnemiesPairs: function processPlayerEnemiesPairs(pairs) {
@@ -235,8 +256,8 @@ Scene.Engine = (function () {
                 self._render();
                 self._processInput();
                 self._processCollisions();
+                self._updateAllEffects();
                 self._updateObjs();
-                self._updateEffects();
                 self._spawnEnemies();
                 self._spawnPickups();
                 self._spawnEffects();

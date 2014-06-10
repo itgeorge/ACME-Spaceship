@@ -1,4 +1,5 @@
-﻿var Scene = Scene || {};
+﻿/// <reference path="pick-up.js" />
+var Scene = Scene || {};
 //movement, x, y, radius, hitpoints, maxSpeed, renderType
 Scene.GameLogicConstants = {
     ENEMY_TYPE_1: { movement: 'streight', radius: 2, hitpoints: 1, maxSpeed: 1, renderType: Scene.GameObjectRenderType.ENEMY_SHIP },
@@ -14,6 +15,13 @@ Scene.GameLogic = Class.create({
         this.enemies = [];
     },
     getNewPickups: function () {
+        //TODO: this is for testing purposes, re-write more meaningful logic
+        if (this.callForEnemiesCounter == Scene.GameLogicConstants.LEVEL_1_SPAWN_TIME - 1) {
+            return Math.random() > 0.5 ?
+                [Scene.PickUp.getSeeker(10, 1, 800)] :
+                [Scene.PickUp.getLaser(10, 1, 800)]
+        }
+
         return [];
     },
     getNewEnemies: function (enemiesArray) {
