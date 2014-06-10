@@ -15,10 +15,10 @@ Scene.GameLogic = (function () {
     var LEVEL_1_SPAWN_TIME = 60;
     var LEVEL_2_SPAWN_TIME = 40;
     var LEVEL_3_SPAWN_TIME = 30;
-    var LEVEL_4_SPAWN_TIME = 70;
-    var LEVEL_5_SPAWN_TIME = 60;
-    var LEVEL_6_SPAWN_TIME = 50;
-    var LEVEL_7_SPAWN_TIME = 30;
+    var LEVEL_4_SPAWN_TIME = 25;
+    var LEVEL_5_SPAWN_TIME = 20;
+    var LEVEL_6_SPAWN_TIME = 15;
+    var LEVEL_7_SPAWN_TIME = 10;
 
     var GameLogic = Class.create({
         initialize: function (screenWidth) {
@@ -89,25 +89,110 @@ Scene.GameLogic = (function () {
                         return [];
                     }
                 case 3:
-                    return [];
+                    this.callForEnemiesCounter++;
+                    if (!this.isBossTime) {
+                        if (this.enemiesCreated < ENEMIES_LEVEL_3
+                            && this.callForEnemiesCounter == LEVEL_3_SPAWN_TIME) {
+                            this.enemiesCreated++;
+                            this.callForEnemiesCounter = 0;
+                            return [this.getEasyEnemy(), this.getMediumEnemy()];
+                        } else {
+                            if (this.enemiesCreated == ENEMIES_LEVEL_3 && enemiesAlive == 0) {
+                                this.level++;
+                                this.callForEnemiesCounter = 0;
+                            }
 
-                    break;
+                            return [];
+                        }
+                    } else {
+                        this.isBossTime = false;
+                        //return [this.getBoss()];
+                        return [];
+                    }
                 case 4:
-                    return [];
+                    this.callForEnemiesCounter++;
+                    if (!this.isBossTime) {
+                        if (this.enemiesCreated < ENEMIES_LEVEL_4
+                            && this.callForEnemiesCounter == LEVEL_4_SPAWN_TIME) {
+                            this.enemiesCreated++;
+                            this.callForEnemiesCounter = 0;
+                            return [this.getEasyEnemy(), this.getMediumEnemy()];
+                        } else {
+                            if (this.enemiesCreated == ENEMIES_LEVEL_4 && enemiesAlive == 0) {
+                                this.level++;
+                                this.callForEnemiesCounter = 0;
+                            }
 
-                    break;
+                            return [];
+                        }
+                    } else {
+                        this.isBossTime = false;
+                        //return [this.getBoss()];
+                        return [];
+                    }
                 case 5:
-                    return [];
+                    this.callForEnemiesCounter++;
+                    if (!this.isBossTime) {
+                        if (this.enemiesCreated < ENEMIES_LEVEL_5
+                            && this.callForEnemiesCounter == LEVEL_5_SPAWN_TIME) {
+                            this.enemiesCreated++;
+                            this.callForEnemiesCounter = 0;
+                            return [this.getEasyEnemy(), this.getMediumEnemy()];
+                        } else {
+                            if (this.enemiesCreated == ENEMIES_LEVEL_5 && enemiesAlive == 0) {
+                                this.level++;
+                                this.callForEnemiesCounter = 0;
+                            }
 
-                    break;
+                            return [];
+                        }
+                    } else {
+                        this.isBossTime = false;
+                        //return [this.getBoss()];
+                        return [];
+                    }
                 case 6:
-                    return [];
+                    this.callForEnemiesCounter++;
+                    if (!this.isBossTime) {
+                        if (this.enemiesCreated < ENEMIES_LEVEL_6
+                            && this.callForEnemiesCounter == LEVEL_6_SPAWN_TIME) {
+                            this.enemiesCreated++;
+                            this.callForEnemiesCounter = 0;
+                            return [this.getEasyEnemy(), this.getMediumEnemy()];
+                        } else {
+                            if (this.enemiesCreated == ENEMIES_LEVEL_6 && enemiesAlive == 0) {
+                                this.level++;
+                                this.callForEnemiesCounter = 0;
+                            }
 
-                    break;
+                            return [];
+                        }
+                    } else {
+                        this.isBossTime = false;
+                        //return [this.getBoss()];
+                        return [];
+                    }
                 case 7:
-                    return [];
+                    this.callForEnemiesCounter++;
+                    if (!this.isBossTime) {
+                        if (this.enemiesCreated < ENEMIES_LEVEL_7
+                            && this.callForEnemiesCounter == LEVEL_7_SPAWN_TIME) {
+                            this.enemiesCreated++;
+                            this.callForEnemiesCounter = 0;
+                            return [this.getEasyEnemy(), this.getMediumEnemy()];
+                        } else {
+                            if (this.enemiesCreated == ENEMIES_LEVEL_7 && enemiesAlive == 0) {
+                                this.level++;
+                                this.callForEnemiesCounter = 0;
+                            }
 
-                    break;
+                            return [];
+                        }
+                    } else {
+                        this.isBossTime = false;
+                        //return [this.getBoss()];
+                        return [];
+                    }
                 default:
                     alert('YOU WIN!');
             }
@@ -124,8 +209,7 @@ Scene.GameLogic = (function () {
         // firing, movement, x, y, radius, hitpoints, maxSpeed, type, renderType
         getEasyEnemy: function () {
             var x = getRandXCoord(1, this.screenWidth);
-            var fire = new StraightMove(20, false);
-            return new Scene.EnemyShip(fire, new StraightMove(4, false), x, 1, 10, 4, 4, Scene.GameObjectType.ENEMY_SHIP, Scene.GameObjectRenderType.EASY_ENEMY);
+            return new Scene.EnemyShip(null, new StraightMove(4, false), x, 1, 10, 4, 4, Scene.GameObjectType.ENEMY_SHIP, Scene.GameObjectRenderType.EASY_ENEMY);
         },
         getMediumEnemy: function () {
             var x = getRandXCoord(1, this.screenWidth);
