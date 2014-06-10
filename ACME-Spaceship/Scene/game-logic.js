@@ -2,98 +2,154 @@
 var Scene = Scene || {};
 //movement, x, y, radius, hitpoints, maxSpeed, renderType
 Scene.GameLogicConstants = {
-    ENEMY_TYPE_1: { movement: 'streight', radius: 2, hitpoints: 1, maxSpeed: 1, renderType: Scene.GameObjectRenderType.ENEMY_SHIP },
-    ENEMIES_LEVEL_1: 100,
-    LEVEL_1_SPAWN_TIME: 100,
+
 };
-Scene.GameLogic = Class.create({
-    initialize: function () {
-        this.level = 1;
-        this.isBossTime = false;
-        this.callForEnemiesCounter = 0;
-        this.enemiesCreated = 0;
-        this.enemies = [];
-    },
-    getNewPickups: function () {
-        //TODO: this is for testing purposes, re-write more meaningful logic
-        if (this.callForEnemiesCounter == Scene.GameLogicConstants.LEVEL_1_SPAWN_TIME - 1) {
-            return Math.random() > 0.5 ?
-                [Scene.PickUp.getSeeker(10, 1, 800)] :
-                [Scene.PickUp.getLaser(10, 1, 800)]
-        }
+Scene.GameLogic = (function () {
+    var ENEMIES_LEVEL_1 = 10;
+    var ENEMIES_LEVEL_2 = 20;
+    var ENEMIES_LEVEL_3 = 30;
+    var ENEMIES_LEVEL_4 = 40;
+    var ENEMIES_LEVEL_5 = 50;
+    var ENEMIES_LEVEL_6 = 60;
+    var ENEMIES_LEVEL_7 = 70;
+    var LEVEL_1_SPAWN_TIME = 60;
+    var LEVEL_2_SPAWN_TIME = 40;
+    var LEVEL_3_SPAWN_TIME = 30;
+    var LEVEL_4_SPAWN_TIME = 70;
+    var LEVEL_5_SPAWN_TIME = 60;
+    var LEVEL_6_SPAWN_TIME = 50;
+    var LEVEL_7_SPAWN_TIME = 30;
 
-        return [];
-    },
-    getNewEnemies: function (enemiesArray) {
-        this.callForEnemiesCounter++;
+    var GameLogic = Class.create({
+        initialize: function (screenWidth) {
+            this.screenWidth = screenWidth;
+            this.level = 1;
+            this.isBossTime = false;
+            this.callForEnemiesCounter = 0;
+            this.enemiesCreated = 0;
+            this.enemies = {};
+        },
+        getNewPickups: function () {
+            if (Math.random() > 0.98) {
+                return Math.random() > 0.5 ? [Scene.PickUp.getSeeker(1, 1, 800)] : [Scene.PickUp.getLaser(1, 1, 800)];
+            }
 
-        var enemiesAlive = Object.keys(enemiesArray).length;
-        if (enemiesAlive == 0 && this.enemiesCreated > Scene.GameLogicConstants.ENEMIES_LEVEL_1) {
-            this.isBossTime = true;
-        }
+            return [];
+        },
+        getNewEnemies: function (enemiesArray) {
+            this.enemies = enemiesArray;
+            var enemiesAlive = Object.keys(enemiesArray).length;
+            //if (enemiesAlive == 0 && this.enemiesCreated > ENEMIES_LEVEL_1) {
+            //    this.isBossTime = true;
+            //}
 
-        switch (this.level) {
-            case 1:
-                if (!this.isBossTime) {
-                    if (this.enemiesCreated < Scene.GameLogicConstants.ENEMIES_LEVEL_1
-                        && this.callForEnemiesCounter == Scene.GameLogicConstants.LEVEL_1_SPAWN_TIME) {
-                        this.enemiesCreated++;
-                        this.callForEnemiesCounter = 0;
-                        return [EnemyFactory.getEasyEnemy()];
-                    } else {
-                        if (this.enemiesCreated == Scene.GameLogicConstants.ENEMIES_LEVEL_1 && enemiesAlive == 0) {
-                            this.level++;
+            switch (this.level) {
+                case 1:
+                    this.callForEnemiesCounter++;
+
+                    if (!this.isBossTime) {
+                        if (this.enemiesCreated < ENEMIES_LEVEL_1
+                            && this.callForEnemiesCounter == LEVEL_1_SPAWN_TIME) {
+
+                            this.enemiesCreated++;
+                            this.callForEnemiesCounter = 0;
+                            return [this.getEasyEnemy()];
+                        } else {
+                            if (this.enemiesCreated == ENEMIES_LEVEL_1 && enemiesAlive == 0) {
+                                this.level++;
+                                this.callForEnemiesCounter = 0;
+                            }
+
+                            return [];
                         }
-
+                    } else {
+                        this.isBossTime = false;
+                        //return [this.getBoss()];
                         return [];
                     }
-                } else {
-                    this.isBossTime = false;
-                    return [EnemyFactory.getBoss()];
-                }
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            case 5:
-                break;
-            case 6:
-                break;
-            case 7:
-                break;
-            default:
-                alert('YOU WIN!');
+                case 2:
+                    this.callForEnemiesCounter++;
+                    if (!this.isBossTime) {
+                        if (this.enemiesCreated < ENEMIES_LEVEL_2
+                            && this.callForEnemiesCounter == LEVEL_2_SPAWN_TIME) {
+                            this.enemiesCreated++;
+                            this.callForEnemiesCounter = 0;
+                            return [this.getEasyEnemy(), this.getMediumEnemy()];
+                        } else {
+                            if (this.enemiesCreated == ENEMIES_LEVEL_2 && enemiesAlive == 0) {
+                                this.level++;
+                                this.callForEnemiesCounter = 0;
+                            }
+
+                            return [];
+                        }
+                    } else {
+                        this.isBossTime = false;
+                        //return [this.getBoss()];
+                        return [];
+                    }
+                case 3:
+                    return [];
+
+                    break;
+                case 4:
+                    return [];
+
+                    break;
+                case 5:
+                    return [];
+
+                    break;
+                case 6:
+                    return [];
+
+                    break;
+                case 7:
+                    return [];
+
+                    break;
+                default:
+                    alert('YOU WIN!');
+            }
+        },
+        watchPlayer: function (playerShip) {
+
+        },
+        getGameState: function () {
+
+        },
+        getCurrentLevel: function () {
+            return this.level;
+        },
+        // firing, movement, x, y, radius, hitpoints, maxSpeed, type, renderType
+        getEasyEnemy: function () {
+            var x = getRandXCoord(1, this.screenWidth);
+            var fire = new StraightMove(20, false);
+            return new Scene.EnemyShip(fire, new StraightMove(4, false), x, 1, 10, 4, 4, Scene.GameObjectType.ENEMY_SHIP, Scene.GameObjectRenderType.EASY_ENEMY);
+        },
+        getMediumEnemy: function () {
+            var x = getRandXCoord(1, this.screenWidth);
+            var zigLen = getRandXCoord(1, 40);
+            return new Scene.EnemyShip(null, new ZigZagMove(4, zigLen), x, 1, 10, 4, 4, Scene.GameObjectType.ENEMY_SHIP, Scene.GameObjectRenderType.MEDIUM_ENEMY);
+        },
+        getHardEnemy: function () {
+            var x = getRandXCoord(1, this.screenWidth);
+            var zigLen = getRandXCoord(1, 10);
+            return new Scene.EnemyShip(null, new ZigZagMove(8, zigLen), x, 1, 10, 4, 4, Scene.GameObjectType.ENEMY_SHIP, Scene.GameObjectRenderType.HARD_ENEMY);
+        },
+        getInsaneEnemy: function () {
+            var x = getRandXCoord(1, this.screenWidth);
+            return new Scene.EnemyShip(null, new FollowShipMove(6), x, 1, 10, 4, 4, Scene.GameObjectType.ENEMY_SHIP, Scene.GameObjectRenderType.INSANE_ENEMY);
+        },
+        getBoss: function () {
+            var x = getRandXCoord(1, this.screenWidth);
+            return new Scene.Boss(null, new HorizontalMove(20, 20), x, 1, 100, 4, 4, Scene.GameObjectType.ENEMY_SHIP, Scene.GameObjectRenderType.BOSS_SHIP);
         }
-    },
-    watchPlayer: function (playerShip) {
+    });
 
-    },
-    getGameState: function () {
-
-    },
-    getCurrentLevel: function () {
-        return this.level;
+    function getRandXCoord(minX, maxX) {
+        return minX + (maxX - minX) * Math.random();
     }
-});
 
-var EnemyFactory = {
-    //movement, x, y, radius, hitpoints, maxSpeed, renderType
-    getEasyEnemy: function () {
-        return new Scene.EnemyShip(null, new StraightMove(4, false), 100, 1, 10, 4, 4, Scene.GameObjectType.ENEMY_SHIP, Scene.GameObjectRenderType.EASY_ENEMY);
-    },
-    getMediumEnemy: function () {
-        return new Scene.EnemyShip();
-    },
-    getHardEnemy: function () {
-        return new Scene.EnemyShip();
-    },
-    getInsaneEnemy: function () {
-        return new Scene.EnemyShip();
-    },
-    getBoss: function () {
-        return new Scene.Boss();
-    },
-};
+    return GameLogic;
+})();

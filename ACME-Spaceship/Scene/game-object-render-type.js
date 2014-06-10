@@ -2,6 +2,9 @@
 Scene.GameObjectRenderType = {
     PLAYER_SHIP: "player-ship",
     EASY_ENEMY: "easy-enemy",
+    MEDIUM_ENEMY: "medium-enemy",
+    HARD_ENEMY: "hard-enemy",
+    INSANE_ENEMY: "insane-enemy",
     BOSS_SHIP: "boss", //TODO: replace this with the actual 7 boss types
     PICK_UP: "pick-up",
     BULLET: "bullet",
