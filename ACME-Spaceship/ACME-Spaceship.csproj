@@ -62,6 +62,7 @@
     <Content Include="Scene\bonus-type.js" />
     <Content Include="Scene\boss.js" />
     <Content Include="Scene\bullet.js" />
+    <Content Include="Scene\enemy-ship-seeker.js" />
     <Content Include="Scene\enemy-ship.js" />
     <Content Include="Scene\firing.js" />
     <Content Include="Scene\game-logic.js" />

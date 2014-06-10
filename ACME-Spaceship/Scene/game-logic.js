@@ -12,9 +12,9 @@ Scene.GameLogic = (function () {
     var ENEMIES_LEVEL_5 = 50;
     var ENEMIES_LEVEL_6 = 60;
     var ENEMIES_LEVEL_7 = 70;
-    var LEVEL_1_SPAWN_TIME = 60;
-    var LEVEL_2_SPAWN_TIME = 40;
-    var LEVEL_3_SPAWN_TIME = 30;
+    var LEVEL_1_SPAWN_TIME = 1;
+    var LEVEL_2_SPAWN_TIME = 1;
+    var LEVEL_3_SPAWN_TIME = 1;
     var LEVEL_4_SPAWN_TIME = 25;
     var LEVEL_5_SPAWN_TIME = 20;
     var LEVEL_6_SPAWN_TIME = 15;
@@ -28,9 +28,10 @@ Scene.GameLogic = (function () {
             this.callForEnemiesCounter = 0;
             this.enemiesCreated = 0;
             this.enemies = {};
+            this.playerShip = {};
         },
         getNewPickups: function () {
-            
+
             if (Math.random() > 0.98) {
                 var r = Math.random();
                 if (r < 0.3) {
@@ -124,7 +125,7 @@ Scene.GameLogic = (function () {
                             && this.callForEnemiesCounter == LEVEL_4_SPAWN_TIME) {
                             this.enemiesCreated++;
                             this.callForEnemiesCounter = 0;
-                            return [this.getEasyEnemy(), this.getMediumEnemy(),this.getHardEnemy()];
+                            return [this.getEasyEnemy(), this.getMediumEnemy(), this.getHardEnemy()];
                         } else {
                             if (this.enemiesCreated == ENEMIES_LEVEL_4 && enemiesAlive == 0) {
                                 this.level++;
@@ -166,7 +167,7 @@ Scene.GameLogic = (function () {
                             && this.callForEnemiesCounter == LEVEL_6_SPAWN_TIME) {
                             this.enemiesCreated++;
                             this.callForEnemiesCounter = 0;
-                            return [this.getEasyEnemy(), this.getMediumEnemy()];
+                            return [this.getEasyEnemy(), this.getMediumEnemy(), this.getMediumEnemy(), this.getHardEnemy()];
                         } else {
                             if (this.enemiesCreated == ENEMIES_LEVEL_6 && enemiesAlive == 0) {
                                 this.level++;
@@ -187,7 +188,7 @@ Scene.GameLogic = (function () {
                             && this.callForEnemiesCounter == LEVEL_7_SPAWN_TIME) {
                             this.enemiesCreated++;
                             this.callForEnemiesCounter = 0;
-                            return [this.getEasyEnemy(), this.getMediumEnemy()];
+                            return [this.getEasyEnemy(), this.getEasyEnemy(), this.getMediumEnemy(), this.getMediumEnemy(), this.getHardEnemy(), this.getHardEnemy()];
                         } else {
                             if (this.enemiesCreated == ENEMIES_LEVEL_7 && enemiesAlive == 0) {
                                 this.level++;
@@ -206,7 +207,7 @@ Scene.GameLogic = (function () {
             }
         },
         watchPlayer: function (playerShip) {
-
+            this.playerShip = playerShip;
         },
         getGameState: function () {
 
@@ -226,7 +227,7 @@ Scene.GameLogic = (function () {
         },
         getHardEnemy: function () {
             var x = getRandXCoord(1, this.screenWidth);
-            return new Scene.EnemyShip(null, new FollowShipMove(6), x, 1, 10, 4, 4, Scene.GameObjectType.ENEMY_SHIP, Scene.GameObjectRenderType.INSANE_ENEMY);
+            return new Scene.EnemyShipSeeker(null, new FollowShipMove(6), x, 1, 10, 4, 4, Scene.GameObjectType.ENEMY_SHIP, Scene.GameObjectRenderType.HARD_ENEMY);
         },
         getBoss: function () {
             var x = getRandXCoord(1, this.screenWidth);
