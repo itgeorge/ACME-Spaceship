@@ -18,6 +18,7 @@ Scene.GameObject = (function () {
         },
         _produce: function (obj) {
             this.produced.push(obj);
+            obj.parentId = this.id;
         },
         equals: function equals(otherObject) {
             return this.id == otherObject.id;
