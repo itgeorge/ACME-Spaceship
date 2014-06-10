@@ -38,6 +38,24 @@ Scene.Renderer = Class.create({
     },
     _drawObj: function drawObj(obj) {
         var image = this.typeImages[obj.renderType];
-        this.ctx.drawImage(image, obj.x - obj.radius, obj.y - obj.radius, obj.radius * 2, obj.radius * 2);
+
+        var imageWidthAttr = image.getAttribute("width");
+        var imageHeightAttr = image.getAttribute("height");
+
+        var width = imageWidthAttr || obj.radius * 2;
+        var height = imageHeightAttr || obj.radius * 2;
+        
+        this.ctx.drawImage(image, obj.x - width / 2.0, obj.y - height / 2.0, width, height);
+
+        //debug
+        this._debugDrawRadius(obj);
+    },
+    _debugDrawRadius: function (obj) {
+        this.ctx.beginPath();
+        this.ctx.arc(obj.x, obj.y, obj.radius, 0, 2 * Math.PI, false);
+        this.ctx.lineWidth = 1;
+        this.ctx.strokeStyle = "#00FFFF";
+        this.ctx.stroke();
+        this.ctx.closePath();
     }
 });

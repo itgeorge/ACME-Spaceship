@@ -44,8 +44,10 @@ Scene.PlayerShip = (function () {
             }
 
             if (this.shield > 0) {
-                this._produce(new Scene.WeaponAttachment(this.x, this.y,
-                    Scene.GameObjectRenderType.SHIELD_ATTACHMENT));
+                var shieldAttachment = new Scene.WeaponAttachment(this.x, this.y,
+                    Scene.GameObjectRenderType.SHIELD_ATTACHMENT);
+                shieldAttachment.radius = this.radius;
+                this._produce(shieldAttachment);
             }
 
             if (this.gunCooldown > 0) {
@@ -75,7 +77,6 @@ Scene.PlayerShip = (function () {
                 var startX = this.x;
                 var startY = this.y;
                 var bullet = new Scene.Bullet(startX, startY, true);
-                bullet.parentId = this.id;
                 this._produce(bullet);
 
                 this.gunCooldown = defaultGunCooldownFrames;
@@ -88,7 +89,6 @@ Scene.PlayerShip = (function () {
 
                 for (var i = 0; i < length; i++) {
                     var beamPart = new Scene.Laser(startX, startY - Scene.Laser.defaultRadius * i);
-                    beamPart.parentId = this.id;
                     this._produce(beamPart);
                 }
 
@@ -100,7 +100,6 @@ Scene.PlayerShip = (function () {
                 var startX = this.x + seekerXOffset;
                 var startY = this.y + seekerYOffset;
                 var seeker = new Scene.Seeker(target, startX, startY);
-                seeker.parentId = this.id;
                 this._produce(seeker);
 
                 this.seekerCooldown = defaultSeekerCooldownFrames;
