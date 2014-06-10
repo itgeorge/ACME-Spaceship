@@ -16,7 +16,7 @@ Scene.GameObject = (function () {
             this.parentId = -1;
             this.produced = [];
         },
-        _addProduced: function (obj) {
+        _produce: function (obj) {
             this.produced.push(obj);
         },
         equals: function equals(otherObject) {

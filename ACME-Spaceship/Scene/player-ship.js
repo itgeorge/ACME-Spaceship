@@ -34,7 +34,7 @@ Scene.PlayerShip = (function () {
             var startY = this.y;
             var bullet = new Scene.Bullet(startX, startY, true);
             bullet.parentId = this.id;
-            this._addProduced(bullet);
+            this._produce(bullet);
         },
         fireLaser: function fireLaser(length) {
             var startX = this.x;
@@ -43,7 +43,7 @@ Scene.PlayerShip = (function () {
             for (var i = 0; i < length; i++) {
                 var part = new Scene.Laser(startX, startY - Scene.Laser.defaultRadius * i);
                 part.parentId = this.id;
-                this._addProduced(part);
+                this._produce(part);
             }
         },
         fireSeeker: function fireSeeker(target) {
@@ -51,7 +51,7 @@ Scene.PlayerShip = (function () {
             var startY = this.y;
             var seeker = new Scene.Seeker(target, startX, startY);
             seeker.parentId = this.id;
-            this._addProduced(seeker);
+            this._produce(seeker);
         }
     })
 })();
