@@ -103,7 +103,7 @@ Scene.GameLogic = (function () {
                             && this.callForEnemiesCounter == LEVEL_3_SPAWN_TIME) {
                             this.enemiesCreated++;
                             this.callForEnemiesCounter = 0;
-                            return [this.getEasyEnemy(), this.getMediumEnemy()];
+                            return [this.getEasyEnemy(), this.getMediumEnemy(), this.getMediumEnemy()];
                         } else {
                             if (this.enemiesCreated == ENEMIES_LEVEL_3 && enemiesAlive == 0) {
                                 this.level++;
@@ -124,7 +124,7 @@ Scene.GameLogic = (function () {
                             && this.callForEnemiesCounter == LEVEL_4_SPAWN_TIME) {
                             this.enemiesCreated++;
                             this.callForEnemiesCounter = 0;
-                            return [this.getEasyEnemy(), this.getMediumEnemy()];
+                            return [this.getEasyEnemy(), this.getMediumEnemy(),this.getHardEnemy()];
                         } else {
                             if (this.enemiesCreated == ENEMIES_LEVEL_4 && enemiesAlive == 0) {
                                 this.level++;
@@ -145,7 +145,7 @@ Scene.GameLogic = (function () {
                             && this.callForEnemiesCounter == LEVEL_5_SPAWN_TIME) {
                             this.enemiesCreated++;
                             this.callForEnemiesCounter = 0;
-                            return [this.getEasyEnemy(), this.getMediumEnemy()];
+                            return [this.getMediumEnemy(), this.getMediumEnemy(), this.getHardEnemy()];
                         } else {
                             if (this.enemiesCreated == ENEMIES_LEVEL_5 && enemiesAlive == 0) {
                                 this.level++;
@@ -225,11 +225,6 @@ Scene.GameLogic = (function () {
             return new Scene.EnemyShip(null, new ZigZagMove(4, zigLen), x, 1, 10, 4, 4, Scene.GameObjectType.ENEMY_SHIP, Scene.GameObjectRenderType.MEDIUM_ENEMY);
         },
         getHardEnemy: function () {
-            var x = getRandXCoord(1, this.screenWidth);
-            var zigLen = getRandXCoord(1, 10);
-            return new Scene.EnemyShip(null, new ZigZagMove(8, zigLen), x, 1, 10, 4, 4, Scene.GameObjectType.ENEMY_SHIP, Scene.GameObjectRenderType.HARD_ENEMY);
-        },
-        getInsaneEnemy: function () {
             var x = getRandXCoord(1, this.screenWidth);
             return new Scene.EnemyShip(null, new FollowShipMove(6), x, 1, 10, 4, 4, Scene.GameObjectType.ENEMY_SHIP, Scene.GameObjectRenderType.INSANE_ENEMY);
         },
