@@ -8,7 +8,7 @@ function init() {
     //INIT
     var canvasEl = document.getElementById("viewport");
     var renderer = new Scene.Renderer(canvasEl);
-    var gameLogic = new Scene.GameLogic();
+    var gameLogic = new Scene.GameLogic(screenWidth);
     var engine = new Scene.Engine(canvasEl.width, canvasEl.height, renderer, gameLogic, 30);
 
     engine.run();

@@ -21,6 +21,26 @@ var StraightMove = Class.create(Movement, {
     }
 });
 
+var HorizontalMove = Class.create(Movement, {
+    initialize: function ($super, speed, stepLength) {
+        $super(speed);
+        this.stepsMade = 0;
+        this.stepLength = stepLength;
+    },
+    getNextMove: function () {
+        if (this.stepsMade < stepLength) {
+            this.stepsMade++;
+        } else {
+            this.stepsMade = 0;
+            this.deltaX = Math.random() > 0.5 ? this.speed : (-1) * this.speed;
+        }
+        return {
+            x: this.deltaX,
+            y: this.deltaY
+        };
+    }
+});
+
 var ZigZagMove = Class.create(Movement, {
     initialize: function ($super, speed, zigZagLength) {
         $super(speed);
@@ -60,7 +80,7 @@ var FollowShipMove = Class.create(Movement, {
         return sign * (absUnits > this.speed ? this.speed : absUnits);
     },
     getNextMove: function ($super, follower, target) {
-        
+
         return {
             x: this._limitToSpeed(target.x - follower.x),
             y: this._limitToSpeed(target.y - follower.y)
