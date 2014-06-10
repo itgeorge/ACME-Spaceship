@@ -49,21 +49,21 @@ var FollowShipMove = Class.create(Movement, {
     initialize: function ($super, speed) {
         $super(speed);
     },
-    getNextMove: function ($super, follower, target) {
-        if (follower.x < target.x) {
-            this.deltaX = this.speed;
-        } else {
-            this.deltaX = (-1) * this.speed;
+    _limitToSpeed: function limitToMaxSpeed(units) {
+        if (units == 0) {
+            return 0;
         }
 
-        if (follower.y < target.y) {
-            this.deltaY = this.speed;
-        } else {
-            this.deltaY = (-1) * this.speed;
-        }
+        var absUnits = Math.abs(units);
+        var sign = units / absUnits;
+
+        return sign * (absUnits > this.speed ? this.speed : absUnits);
+    },
+    getNextMove: function ($super, follower, target) {
+        
         return {
-            x: this.deltaX,
-            y: this.deltaY
+            x: this._limitToSpeed(target.x - follower.x),
+            y: this._limitToSpeed(target.y - follower.y)
         };
     }
 });
