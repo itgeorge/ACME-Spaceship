@@ -7,6 +7,19 @@
         this.deltaY = 0.0;
     }
 });
+var SimpleMove = Class.create(Movement, {    
+   initialize: function($super, speed, x, y) {
+       $super(speed);
+       this.deltaX = x;
+       this.deltaY = y;
+   },
+   getNextMove: function() {
+       return {
+           x: this.deltaX,
+           y: this.deltaY
+       };
+   }
+});
 
 var StraightMove = Class.create(Movement, {
     initialize: function ($super, speed, isMovingUp) {

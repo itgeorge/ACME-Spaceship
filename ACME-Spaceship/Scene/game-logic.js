@@ -103,7 +103,7 @@ Scene.GameLogic = (function () {
                             && this.callForEnemiesCounter == LEVEL_3_SPAWN_TIME) {
                             this.enemiesCreated++;
                             this.callForEnemiesCounter = 0;
-                            return [this.getEasyEnemy(), this.getMediumEnemy()];
+                            return [this.getEasyEnemy(), this.getMediumEnemy(), this.getMediumEnemy()];
                         } else {
                             if (this.enemiesCreated == ENEMIES_LEVEL_3 && enemiesAlive == 0) {
                                 this.level++;
@@ -124,7 +124,7 @@ Scene.GameLogic = (function () {
                             && this.callForEnemiesCounter == LEVEL_4_SPAWN_TIME) {
                             this.enemiesCreated++;
                             this.callForEnemiesCounter = 0;
-                            return [this.getEasyEnemy(), this.getMediumEnemy()];
+                            return [this.getEasyEnemy(), this.getMediumEnemy(),this.getHardEnemy()];
                         } else {
                             if (this.enemiesCreated == ENEMIES_LEVEL_4 && enemiesAlive == 0) {
                                 this.level++;
@@ -145,7 +145,7 @@ Scene.GameLogic = (function () {
                             && this.callForEnemiesCounter == LEVEL_5_SPAWN_TIME) {
                             this.enemiesCreated++;
                             this.callForEnemiesCounter = 0;
-                            return [this.getEasyEnemy(), this.getMediumEnemy()];
+                            return [this.getMediumEnemy(), this.getMediumEnemy(), this.getHardEnemy()];
                         } else {
                             if (this.enemiesCreated == ENEMIES_LEVEL_5 && enemiesAlive == 0) {
                                 this.level++;
