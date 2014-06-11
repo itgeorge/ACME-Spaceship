@@ -15,7 +15,7 @@ Scene.PlayerShip = (function () {
     var seekerXOffset = 0;
     var seekerYOffset = 0;
 
-    var laserXOffset = 20;
+    var laserXOffset = 0;
     var laserYOffset = 0;
 
     var defaultSeekerCooldownFrames = 30;
