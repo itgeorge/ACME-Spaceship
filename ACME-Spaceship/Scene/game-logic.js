@@ -6,15 +6,15 @@ Scene.GameLogicConstants = {
 };
 Scene.GameLogic = (function () {
     var ENEMIES_LEVEL_1 = 10;
-    var ENEMIES_LEVEL_2 = 12;
-    var ENEMIES_LEVEL_3 = 14;
-    var ENEMIES_LEVEL_4 = 40;
-    var ENEMIES_LEVEL_5 = 50;
-    var ENEMIES_LEVEL_6 = 60;
-    var ENEMIES_LEVEL_7 = 70;
-    var LEVEL_1_SPAWN_TIME = 1;
-    var LEVEL_2_SPAWN_TIME = 1;
-    var LEVEL_3_SPAWN_TIME = 1;
+    var ENEMIES_LEVEL_2 = 20;
+    var ENEMIES_LEVEL_3 = 30;
+    var ENEMIES_LEVEL_4 = 30;
+    var ENEMIES_LEVEL_5 = 30;
+    var ENEMIES_LEVEL_6 = 30;
+    var ENEMIES_LEVEL_7 = 700;
+    var LEVEL_1_SPAWN_TIME = 90;
+    var LEVEL_2_SPAWN_TIME = 80;
+    var LEVEL_3_SPAWN_TIME = 50;
     var LEVEL_4_SPAWN_TIME = 25;
     var LEVEL_5_SPAWN_TIME = 20;
     var LEVEL_6_SPAWN_TIME = 15;
@@ -62,8 +62,7 @@ Scene.GameLogic = (function () {
 
                             this.enemiesCreated++;
                             this.callForEnemiesCounter = 0;
-                            //return [this.getEasyEnemy()];
-                            return  [this.getHardEnemy()]
+                            return [this.getEasyEnemy()];
                         } else {
                             if (this.enemiesCreated == ENEMIES_LEVEL_1 && enemiesAlive == 0) {
                                 this.level++;
@@ -219,7 +218,8 @@ Scene.GameLogic = (function () {
         // firing, movement, x, y, radius, hitpoints, maxSpeed, type, renderType
         getEasyEnemy: function () {
             var x = getRandXCoord(1, this.screenWidth);
-            return new Scene.EnemyShip(null, new StraightMove(4, false), x, 1, 10, 4, 4, Scene.GameObjectType.ENEMY_SHIP, Scene.GameObjectRenderType.EASY_ENEMY);
+            var fireStrat = new StraightFireDown();
+            return new Scene.EnemyShip(fireStrat, new StraightMove(4, false), x, 1, 10, 4, 4, Scene.GameObjectType.ENEMY_SHIP, Scene.GameObjectRenderType.EASY_ENEMY);
         },
         getMediumEnemy: function () {
             var x = getRandXCoord(1, this.screenWidth);
