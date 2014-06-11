@@ -5,20 +5,20 @@ Scene.GameLogicConstants = {
 
 };
 Scene.GameLogic = (function () {
-    var ENEMIES_LEVEL_1 = 10;
+    var ENEMIES_LEVEL_1 = 1;
     var ENEMIES_LEVEL_2 = 20;
     var ENEMIES_LEVEL_3 = 30;
     var ENEMIES_LEVEL_4 = 40;
     var ENEMIES_LEVEL_5 = 50;
     var ENEMIES_LEVEL_6 = 60;
-    var ENEMIES_LEVEL_7 = 70;
+    var ENEMIES_LEVEL_7 = 65;
     var LEVEL_1_SPAWN_TIME = 90;
     var LEVEL_2_SPAWN_TIME = 80;
     var LEVEL_3_SPAWN_TIME = 70;
     var LEVEL_4_SPAWN_TIME = 60;
     var LEVEL_5_SPAWN_TIME = 50;
     var LEVEL_6_SPAWN_TIME = 40;
-    var LEVEL_7_SPAWN_TIME = 30;
+    var LEVEL_7_SPAWN_TIME = 45;
 
     var GameLogic = Class.create({
         initialize: function (screenWidth) {
@@ -29,6 +29,7 @@ Scene.GameLogic = (function () {
             this.enemiesCreated = 0;
             this.enemies = {};
             this.playerShip = {};
+            this.createdBoss = false;
         },
         getNewPickups: function () {
 
@@ -48,6 +49,10 @@ Scene.GameLogic = (function () {
         processEnemiesForLevel: function (levelEnemiesCount, levelSpawnTime, enemiesAlive, enemies) {
             this.callForEnemiesCounter++;
 
+            if (enemiesAlive == 0 && this.enemiesCreated >= levelEnemiesCount) {
+                this.isBossTime = true;
+            }
+
             if (!this.isBossTime) {
                 if (this.enemiesCreated < levelEnemiesCount
                     && this.callForEnemiesCounter == levelSpawnTime) {
@@ -55,26 +60,26 @@ Scene.GameLogic = (function () {
                     this.enemiesCreated++;
                     this.callForEnemiesCounter = 0;
                     return enemies;
-                } else {
-                    if (this.enemiesCreated == levelEnemiesCount && enemiesAlive == 0) {
+                }
+                return [];
+            } else {
+                if (this.createdBoss) {
+                    if (enemiesAlive == 0) {
+                        this.isBossTime = false;
+                        this.createdBoss = false
                         this.level++;
                         this.callForEnemiesCounter = 0;
                     }
-
                     return [];
+                } else {
+                    this.createdBoss = true;
+                    return [this.getBoss()];
                 }
-            } else {
-                this.isBossTime = false;
-                //return [this.getBoss()];
-                return [];
             }
         },
         getNewEnemies: function (enemiesArray) {
             this.enemies = enemiesArray;
-            var enemiesAlive = Object.keys(enemiesArray).length;
-            //if (enemiesAlive == 0 && this.enemiesCreated > ENEMIES_LEVEL_1) {
-            //    this.isBossTime = true;
-            //}
+            enemiesAlive = Object.keys(this.enemies).length;
 
             switch (this.level) {
                 case 1:
@@ -120,15 +125,17 @@ Scene.GameLogic = (function () {
         getMediumEnemy: function () {
             var x = getRandXCoord(1, this.screenWidth);
             var zigLen = getRandXCoord(1, 40);
-            return new Scene.EnemyShip(null, new ZigZagMove(4, zigLen), x, 1, 10, 4, 4, Scene.GameObjectType.ENEMY_SHIP, Scene.GameObjectRenderType.MEDIUM_ENEMY);
+            var fireStrat = new DiagonalFireDown(40);
+            return new Scene.EnemyShip(fireStrat, new ZigZagMove(4, zigLen), x, 1, 10, 4, 4, Scene.GameObjectType.ENEMY_SHIP, Scene.GameObjectRenderType.MEDIUM_ENEMY);
         },
         getHardEnemy: function () {
             var x = getRandXCoord(1, this.screenWidth);
-            return new Scene.EnemyShipSeeker(this.playerShip, null, new FollowShipMove(3), x, 1, 10, 4, 4, Scene.GameObjectType.ENEMY_SHIP, Scene.GameObjectRenderType.HARD_ENEMY);
+            var fireStrat = new ForkFireDown(30);
+            return new Scene.EnemyShipSeeker(this.playerShip, fireStrat, new FollowShipMove(3), x, 1, 10, 4, 4, Scene.GameObjectType.ENEMY_SHIP, Scene.GameObjectRenderType.HARD_ENEMY);
         },
         getBoss: function () {
             var x = getRandXCoord(1, this.screenWidth);
-            return new Scene.Boss(null, new HorizontalMove(20, 20), x, 1, 100, 4, 4, Scene.GameObjectType.ENEMY_SHIP, Scene.GameObjectRenderType.BOSS_SHIP);
+            return new Scene.Boss(new ForkFireDown(10), new HorizontalMove(20, 2), x, 1, 100, 600, 4, Scene.GameObjectType.ENEMY_SHIP, Scene.GameObjectRenderType.BOSS_SHIP);
         }
     });
 

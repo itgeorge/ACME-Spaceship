@@ -14,7 +14,7 @@ Scene.Bullet = (function () {
 
     Bullet.getLeftDiagonalBullet = function(x, y) {
         var bullet = new Bullet(x, y);
-        bullet.movement = new SimpleMove(speed, -1, -1);
+        bullet.movement = new SimpleMove(speed, -1, 1);
         return bullet;
     };
 
@@ -26,7 +26,7 @@ Scene.Bullet = (function () {
 
     Bullet.getRightDiagonalBullet = function(x, y) {
         var bullet = new Bullet(x, y);
-        bullet.movement = new SimpleMove(speed, 1, -1);
+        bullet.movement = new SimpleMove(speed, 1, 1);
         return bullet;
     };
 

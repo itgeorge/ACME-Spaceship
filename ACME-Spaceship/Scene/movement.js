@@ -42,7 +42,7 @@ var HorizontalMove = Class.create(Movement, {
         this.stepLength = stepLength;
     },
     getNextMove: function () {
-        if (this.stepsMade < stepLength) {
+        if (this.stepsMade < this.stepLength) {
             this.stepsMade++;
         } else {
             this.stepsMade = 0;

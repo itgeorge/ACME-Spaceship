@@ -17,36 +17,45 @@
     });
 })();
 
-var LeftDiagonalFireDown = (function () {
-    var fireSpawn = 50;
-
+var DiagonalFireDown = (function () {
     return Class.create({
-        initialize: function () {
+        initialize: function (framesToShoot) {
             this.callGetProjectileCounter = 0;
+            this.framesToShoot = framesToShoot;
         },
         getProjectile: function (startX, startY) {
             this.callGetProjectileCounter++;
-            if (this.callGetProjectileCounter == fireSpawn) {
+            if (this.callGetProjectileCounter == this.framesToShoot) {
                 this.callGetProjectileCounter = 0;
-                return new Scene.Bullet(startX, startY, false);
+                return Math.random() < 0.5 ?
+                    Scene.Bullet.getLeftDiagonalBullet(startX, startY) :
+                    Scene.Bullet.getRightDiagonalBullet(startX, startY)
             }
         }
     });
 })();
 
 
-var RightDiagonalFireDown = (function () {
-    var fireSpawn = 50;
-
+var ForkFireDown = (function () {
     return Class.create({
-        initialize: function () {
+        initialize: function (framesToShoot) {
             this.callGetProjectileCounter = 0;
+            this.framesToShoot = framesToShoot;
         },
         getProjectile: function (startX, startY) {
             this.callGetProjectileCounter++;
-            if (this.callGetProjectileCounter == fireSpawn) {
+            if (this.callGetProjectileCounter == this.framesToShoot) {
                 this.callGetProjectileCounter = 0;
-                return new Scene.Bullet(startX, startY, false);
+                var r = Math.random();
+                if(r < 0.3) {
+                    return Scene.Bullet.getStraightBullet(startX, startY);
+                } else if (r < 0.6) {
+                    return Scene.Bullet.getLeftDiagonalBullet(startX, startY);
+                } else if (r < 1) {
+                    return Scene.Bullet.getRightDiagonalBullet(startX, startY)
+                }
+                
+                return null;
             }
         }
     });
