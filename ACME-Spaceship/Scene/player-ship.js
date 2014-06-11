@@ -7,7 +7,7 @@
 /// <reference path="game-object.js" />
 Scene = Scene || {};
 Scene.PlayerShip = (function () {
-    var psRadius = 20;
+    var psRadius = 60;
     var psHP = 10;
     var psShield = psHP;
     var psMaxSpeed = 8;
