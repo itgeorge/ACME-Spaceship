@@ -26,9 +26,9 @@ Scene.PlayerShip = (function () {
             $super(x, y, psRadius, psHP, psMaxSpeed,
                 Scene.GameObjectType.PLAYER_SHIP, Scene.GameObjectRenderType.PLAYER_SHIP);
 
-            this.seekerAmmo = 0;
-            this.laserAmmo = 0;
-            this.shield = 0;
+            this.seekerAmmo = 5;
+            this.laserAmmo = 100;
+            this.shield = psShield;
 
             this.seekerCooldown = defaultSeekerCooldownFrames;
             this.gunCooldown = defaultGunCooldownFrames;
