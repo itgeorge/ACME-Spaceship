@@ -138,6 +138,15 @@ i.shield {
   bottom: 10px;
   width: 50px;
 }
+footer.container {
+  margin-top: 0px;
+}
+footer.container a {
+  font-family: 'Arial';
+  font-size: 14px;
+  color: black;
+  line-height: 50px;
+}
 @font-face {
   font-family: 'myFirstFont';
   src: url(../assets/Xenogears_font.ttf);
