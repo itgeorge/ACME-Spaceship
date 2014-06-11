@@ -47,8 +47,8 @@ Scene.Engine = (function () {
         },
         _render: function render() {
             this.renderer.renderAll(this.bgrEffects, true);
-            this.renderer.renderAll(this.fgrEffects, false);
             this.renderer.renderAll(this.all, false);
+            this.renderer.renderAll(this.fgrEffects, false);
         },
         _addEffect: function addEffect(obj) {
             if (obj.type == Scene.GameObjectType.BACKGROUND_EFFECT) {
