@@ -6,6 +6,5 @@
     updatePlayerShip: function updatePlayerShip(ship) {
         this.healthIndicator.style.width = ship.getHitpointsPercent() + "%";
         this.shieldIndicator.style.width = ship.getShieldPercent() + "%";
-        debugger;
     }
 });
