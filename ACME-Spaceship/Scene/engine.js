@@ -123,7 +123,7 @@ Scene.Engine = (function () {
                 var currEffect = effects[i];
                 currEffect.update();
 
-                if (!this._isInsideWorld(this.bgrEffects[i])) {
+                if (!this._isInsideWorld(effects[i])) {
                     currEffect.destroy();
                 }
 
