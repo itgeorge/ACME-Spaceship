@@ -16,6 +16,21 @@ header{
 	margin-top: 40px;
 }
 
+.health-container{
+	position: absolute;
+	top: 11px;
+	left: 350px;
+	width: 100px;
+	height: 40px;
+	div{
+		position: relative;
+		display: inline-block;
+		width: auto;
+		margin-left: 16px;
+		height: 40px;
+	}
+	
+}
 
 
 .bar{
@@ -56,3 +71,19 @@ header{
 	}
 }
 
+i{
+	border:none;
+	color: white;
+	font-size: 20px;
+	&.health{
+		position: absolute;
+		left: 230px;
+		top: 12px;
+	}
+
+	&.shield{
+		position: absolute;
+		right: 230px;
+		top: 11px;
+	}
+}
