@@ -1,11 +1,8 @@
 ﻿/// <reference path="pick-up.js" />
 var Scene = Scene || {};
-//movement, x, y, radius, hitpoints, maxSpeed, renderType
-Scene.GameLogicConstants = {
 
-};
 Scene.GameLogic = (function () {
-    var ENEMIES_LEVEL_1 = 1;
+    var ENEMIES_LEVEL_1 = 10;
     var ENEMIES_LEVEL_2 = 20;
     var ENEMIES_LEVEL_3 = 30;
     var ENEMIES_LEVEL_4 = 40;
@@ -33,7 +30,7 @@ Scene.GameLogic = (function () {
         },
         getNewPickups: function () {
 
-            if (Math.random() > 0.98) {
+            if (Math.random() > 0.97) {
                 var r = Math.random();
                 if (r < 0.3) {
                     return [Scene.PickUp.getSeeker(10, 1, this.screenWidth)];
@@ -131,11 +128,10 @@ Scene.GameLogic = (function () {
         getHardEnemy: function () {
             var x = getRandXCoord(1, this.screenWidth);
             var fireStrat = new ForkFireDown(30);
-            return new Scene.EnemyShipSeeker(this.playerShip, fireStrat, new FollowShipMove(3), x, 1, 10, 4, 4, Scene.GameObjectType.ENEMY_SHIP, Scene.GameObjectRenderType.HARD_ENEMY);
+            return new Scene.EnemyShipSeeker(this.playerShip, fireStrat, new FollowShipMove(3), x, 1, 10, 4, 2, Scene.GameObjectType.ENEMY_SHIP, Scene.GameObjectRenderType.HARD_ENEMY);
         },
         getBoss: function () {
-            var x = getRandXCoord(1, this.screenWidth);
-            return new Scene.Boss(new ForkFireDown(10), new HorizontalMove(20, 2), x, 1, 100, 600, 4, Scene.GameObjectType.ENEMY_SHIP, Scene.GameObjectRenderType.BOSS_SHIP);
+            return new Scene.Boss(new ForkFireDown(10), new HorizontalMove(20, 5), this.screenWidth / 2, 1, 100, 600, 4, Scene.GameObjectType.ENEMY_SHIP, Scene.GameObjectRenderType.BOSS_SHIP);
         }
     });
 

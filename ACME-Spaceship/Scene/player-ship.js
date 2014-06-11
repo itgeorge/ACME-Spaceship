@@ -10,7 +10,7 @@ Scene.PlayerShip = (function () {
     var psRadius = 20;
     var psHP = 10;
     var psShield = psHP;
-    var psMaxSpeed = 5;
+    var psMaxSpeed = 8;
 
     var seekerXOffset = 0;
     var seekerYOffset = 0;
@@ -22,7 +22,7 @@ Scene.PlayerShip = (function () {
     var defaultGunCooldownFrames = 30;
 
     return Class.create(Scene.GameObject, {
-        initialize: function ($super, x, y) {
+        initialize: function($super, x, y) {
             $super(x, y, psRadius, psHP, psMaxSpeed,
                 Scene.GameObjectType.PLAYER_SHIP, Scene.GameObjectRenderType.PLAYER_SHIP);
 
@@ -114,7 +114,7 @@ Scene.PlayerShip = (function () {
                 this.laserAmmo += pickup.quantity;
             } else if (pickup.bonusType == Scene.BonusType.SHIELD) {
                 this.shield += pickup.quantity;
-                if(this.shield > psShield) {
+                if (this.shield > psShield) {
                     this.shield = psShield;
                 }
             }
@@ -133,6 +133,18 @@ Scene.PlayerShip = (function () {
         },
         getShieldPercent: function getShieldPercent() {
             return (this.shield / psShield) * 100;
+        },
+        getSeekerAmmo: function() {
+            return this.seekerAmmo;
+        },
+        getLaserAmmo: function() {
+            return this.laserAmmo;
+        },
+        getX: function() {
+            return this.x;
+        },
+        getY: function() {
+            return this.y;
         }
-    })
+    });
 })();

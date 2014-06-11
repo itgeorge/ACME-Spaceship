@@ -12,7 +12,7 @@ Scene.GameObject = (function () {
             this.hitpoints = hitpoints;
             this.maxSpeed = maxSpeed;
             this.type = type;
-            this.renderType = renderType
+            this.renderType = renderType;
             this.parentId = -1;
             this.produced = [];
         },

@@ -4,7 +4,7 @@ Scene.Laser =
 (function () {
     var radius = 4;
     var speed = 0;
-    var damage = 10;
+    var damage = 1;
 
     var Laser = Class.create(Scene.Projectile, {
         initialize: function ($super, x, y) {
