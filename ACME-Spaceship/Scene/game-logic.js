@@ -120,22 +120,22 @@ Scene.GameLogic = (function () {
         getEasyEnemy: function () {
             var x = getRandXCoord(1, this.screenWidth);
             var fireStrat = new StraightFireDown();
-            return new Scene.EnemyShip(fireStrat, new StraightMove(4, false), x, 1, 10, 4, 4, Scene.GameObjectType.ENEMY_SHIP, Scene.GameObjectRenderType.EASY_ENEMY);
+            return new Scene.EnemyShip(fireStrat, new StraightMove(4, false), x, 1, 40, 4, 4, Scene.GameObjectType.ENEMY_SHIP, Scene.GameObjectRenderType.EASY_ENEMY);
         },
         getMediumEnemy: function () {
             var x = getRandXCoord(1, this.screenWidth);
             var zigLen = getRandXCoord(1, 40);
             var fireStrat = new DiagonalFireDown(40);
-            return new Scene.EnemyShip(fireStrat, new ZigZagMove(4, zigLen), x, 1, 10, 4, 4, Scene.GameObjectType.ENEMY_SHIP, Scene.GameObjectRenderType.MEDIUM_ENEMY);
+            return new Scene.EnemyShip(fireStrat, new ZigZagMove(4, zigLen), x, 1, 40, 4, 4, Scene.GameObjectType.ENEMY_SHIP, Scene.GameObjectRenderType.MEDIUM_ENEMY);
         },
         getHardEnemy: function () {
             var x = getRandXCoord(1, this.screenWidth);
             var fireStrat = new ForkFireDown(30);
-            return new Scene.EnemyShipSeeker(this.playerShip, fireStrat, new FollowShipMove(3), x, 1, 10, 4, 4, Scene.GameObjectType.ENEMY_SHIP, Scene.GameObjectRenderType.HARD_ENEMY);
+            return new Scene.EnemyShipSeeker(this.playerShip, fireStrat, new FollowShipMove(3), x, 1, 40, 4, 4, Scene.GameObjectType.ENEMY_SHIP, Scene.GameObjectRenderType.HARD_ENEMY);
         },
         getBoss: function () {
             var x = getRandXCoord(1, this.screenWidth);
-            return new Scene.Boss(new ForkFireDown(10), new HorizontalMove(20, 2), x, 1, 100, 600, 4, Scene.GameObjectType.ENEMY_SHIP, Scene.GameObjectRenderType.BOSS_SHIP);
+            return new Scene.Boss(new ForkFireDown(10), new HorizontalMove(20, 2), x, 1, 180, 600, 4, Scene.GameObjectType.ENEMY_SHIP, Scene.GameObjectRenderType.BOSS_SHIP);
         }
     });
 
