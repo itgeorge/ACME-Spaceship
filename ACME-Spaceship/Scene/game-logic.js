@@ -100,15 +100,19 @@ Scene.GameLogic = (function () {
                 case 7:
                     return this.processEnemiesForLevel(ENEMIES_LEVEL_7, LEVEL_7_SPAWN_TIME, enemiesAlive,
                         [this.getEasyEnemy(), this.getEasyEnemy(), this.getMediumEnemy(), this.getMediumEnemy(), this.getHardEnemy(), this.getHardEnemy()]);
-                default:
-                    alert('YOU WIN!');
             }
         },
         watchPlayer: function (playerShip) {
             this.playerShip = playerShip;
         },
         getGameState: function () {
+            if (this.playerShip.isDestroyed()) {
+                return "Game Over";
+            } else if (this.level == 7) {
+                return "Victory";
+            }
 
+            return "Playing";
         },
         getCurrentLevel: function () {
             return this.level;

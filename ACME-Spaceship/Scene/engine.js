@@ -258,16 +258,29 @@ Scene.Engine = (function () {
             this.player = new Scene.PlayerShip(this.worldWidth / 2, this.worldHeight - this.worldHeight * 0.13);
             this._addObj(this.player);
 
-            setInterval(function () {
+            var state = self.gameLogic.getGameState();
+            var gameLooper = setInterval(function () {
                 self._render();
+
+                if (state == "Game Over") {
+                    alert(state);
+                    clearInterval(gameLooper);
+                } else if (state == "Victory") {
+                    alert(state);
+                    clearInterval(gameLooper);
+                }
+
                 self._processInput();
                 self._processCollisions();
                 self._updateAllEffects();
                 self._updateObjs();
                 self.sceneWatcher.updatePlayerShip(self.player);
+                self.sceneWatcher.updateLevel(self.gameLogic.getCurrentLevel());
                 self._spawnEnemies();
                 self._spawnPickups();
                 self._spawnEffects();
+
+                state = self.gameLogic.getGameState();
             }, this.interval);
         },
         _isInsideWorld: function (obj) {

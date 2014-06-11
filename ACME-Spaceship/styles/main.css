@@ -119,7 +119,7 @@ i.shield {
 }
 .laser-indicator {
   position: absolute;
-  left: 60px;
+  left: 90px;
   bottom: 10px;
 }
 .seeker-counter {
@@ -134,7 +134,7 @@ i.shield {
   position: absolute;
   font-size: 20px;
   color: white;
-  left: 86px;
+  left: 116px;
   bottom: 10px;
   width: 50px;
 }

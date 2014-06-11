@@ -12,14 +12,14 @@ Scene.PlayerShip = (function () {
     var psShield = psHP;
     var psMaxSpeed = 8;
 
-    var seekerXOffset = 0;
+    var seekerXOffset = -43;
     var seekerYOffset = 0;
 
-    var laserXOffset = 0;
+    var laserXOffset = 43;
     var laserYOffset = 0;
 
     var defaultSeekerCooldownFrames = 30;
-    var defaultGunCooldownFrames = 30;
+    var defaultGunCooldownFrames = 8;
 
     return Class.create(Scene.GameObject, {
         initialize: function($super, x, y) {
@@ -35,12 +35,12 @@ Scene.PlayerShip = (function () {
         },
         update: function update($super) {
             if (this.seekerAmmo > 0) {
-                this._produce(new Scene.WeaponAttachment(this.x + seekerXOffset, this.y + seekerYOffset,
+                this._produce(new Scene.WeaponAttachment(this.x, this.y,
                     Scene.GameObjectRenderType.SEEKER_ATTACHMENT));
             }
 
             if (this.laserAmmo > 0) {
-                this._produce(new Scene.WeaponAttachment(this.x + laserXOffset, this.y + laserYOffset,
+                this._produce(new Scene.WeaponAttachment(this.x, this.y,
                     Scene.GameObjectRenderType.LASER_ATTACHMENT));
             }
 
