@@ -48,7 +48,7 @@ Scene.Renderer = Class.create({
         this.ctx.drawImage(image, obj.x - width / 2.0, obj.y - height / 2.0, width, height);
 
         //debug
-        this._debugDrawRadius(obj);
+        //this._debugDrawRadius(obj);
     },
     _debugDrawRadius: function (obj) {
         this.ctx.beginPath();

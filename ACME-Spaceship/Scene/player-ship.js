@@ -12,7 +12,7 @@ Scene.PlayerShip = (function () {
     var psShield = psHP;
     var psMaxSpeed = 5;
 
-    var seekerXOffset = -20;
+    var seekerXOffset = 0;
     var seekerYOffset = 0;
 
     var laserXOffset = 20;
