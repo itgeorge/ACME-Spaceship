@@ -3,7 +3,7 @@
 var Scene = Scene || {};
 Scene.Seeker =
 (function () {
-    var radius = 10;
+    var radius = 4.5;
     var speed = 5;
     var damage = 20;
 
