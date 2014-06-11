@@ -8,13 +8,14 @@
 Scene = Scene || {};
 Scene.PlayerShip = (function () {
     var psRadius = 20;
-    var psHP = 4;
+    var psHP = 10;
+    var psShield = psHP;
     var psMaxSpeed = 5;
 
-    var seekerXOffset = -20;
+    var seekerXOffset = 0;
     var seekerYOffset = 0;
 
-    var laserXOffset = 20;
+    var laserXOffset = 0;
     var laserYOffset = 0;
 
     var defaultSeekerCooldownFrames = 30;
@@ -113,15 +114,25 @@ Scene.PlayerShip = (function () {
                 this.laserAmmo += pickup.quantity;
             } else if (pickup.bonusType == Scene.BonusType.SHIELD) {
                 this.shield += pickup.quantity;
+                if(this.shield > psShield) {
+                    this.shield = psShield;
+                }
             }
         },
         takeDamage: function takeDamage($super, damage) {
             if (this.shield > 0) {
                 this.shield -= damage;
+                this.shield = Math.max(this.shield, 0);
             } else {
                 this.shield = 0;
                 $super(damage);
             }
+        },
+        getHitpointsPercent: function getHPPercent() {
+            return (this.hitpoints / psHP) * 100;
+        },
+        getShieldPercent: function getShieldPercent() {
+            return (this.shield / psShield) * 100;
         }
     })
 })();

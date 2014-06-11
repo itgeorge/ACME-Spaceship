@@ -11,14 +11,14 @@ Scene.Star = (function () {
         },
     });
 
-    var smallSpeed = 3;
-    var smallRadius = 3;
+    var smallSpeed = 0.5;
+    var smallRadius = 1;
 
-    var medSpeed = 6;
-    var medRadius = 6;
+    var medSpeed = 0.7;
+    var medRadius = 2;
     
-    var largeSpeed = 9;
-    var largeRadius = 9;
+    var largeSpeed = 1;
+    var largeRadius = 3;
 
     function getRandXCoord(minX, maxX) {
         return minX + (maxX - minX) * Math.random();

@@ -32,6 +32,7 @@
     <script src="Scene/star.js"></script>
     <script src="Scene/player-ship.js"></script>
     <!--Game-->
+    <script src="Scene/scene-watcher.js"></script>
     <script src="Scene/game-logic.js"></script>
     <script src="Scene/engine.js"></script>
     <script src="Scene/renderer.js"></script>
@@ -40,6 +41,8 @@
 
     <link rel="stylesheet" type="text/css" href="styles/reset-css.css">
     <link rel="stylesheet" type="text/css" href="styles/main.css">
+
+    <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">
 </head>
 <body onload="init(event)">
     <header>
@@ -53,15 +56,27 @@
     <div class="container">
         <canvas id="viewport" width="800" height="600"></canvas>
         <div class="bar health">
-            <div class="indicator"></div>
+            <div id="health-indicator" class="indicator"></div>
         </div>
+        <i class="fa fa-heart health"></i>
+        
         <div class="bar shield">
-            <div class="indicator"></div>
+            <div id="shield-indicator" class="indicator"></div>
         </div>
+        <i class="fa fa-shield shield"></i>
+
+        <div class="health-container">
+            <div>
+                <i class="fa fa-heart health-1"></i>
+                <i class="fa fa-heart health-2"></i>
+                <i class="fa fa-heart health-3"></i>
+            </div>
+        </div>
+
     </div>
 
     <div id="image-resources" style="display: none;">
-        <img id="player-ship" src="images/player-ship.png"/>
+        <img id="player-ship" width="128" height="128" src="images/player-ship.png"/>
         <img id="bullet" src="images/player-ship.png"/>
         <img id="easy-enemy" src="images/player-ship.png"/>
         <img id="medium-enemy" src="images/player-ship.png" />
@@ -72,9 +87,9 @@
         <img id="laser-bonus" src="images/laser-bonus.png"/>
         <img id="seeker-bonus" src="images/seeker-bonus.png"/>
         <img id="shield-bonus" src="images/shield-bonus.png"/>
-        <img id="laser-attachment" src="images/laser-attachment.png"/>
-        <img id="seeker-attachment" src="images/seeker-attachment.png" />
-        <img id="shield-attachment" src="images/shield-attachment.png" />
+        <img id="laser-attachment" width="128" height="128" src="images/laser-attachment.png"/>
+        <img id="seeker-attachment" width="128" height="128" src="images/seeker-attachment.png" />
+        <img id="shield-attachment" width="128" height="128" src="images/shield-attachment.png" />
     </div>
     <footer></footer>
 </body>

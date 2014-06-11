@@ -4,11 +4,12 @@
 var Scene = Scene || {};
 Scene.Engine = (function () {
     var Engine = Class.create({
-        initialize: function (worldWidth, worldHeight, renderer, gameLogic, interval) {
+        initialize: function (worldWidth, worldHeight, renderer, gameLogic, sceneWatcher, interval) {
             this.worldWidth = worldWidth;
             this.worldHeight = worldHeight;
-            this.gameLogic = gameLogic;
             this.renderer = renderer;
+            this.gameLogic = gameLogic;
+            this.sceneWatcher = sceneWatcher;
             this.interval = interval;
 
             this.bgrEffects = [];
@@ -34,19 +35,20 @@ Scene.Engine = (function () {
             }
         },
         _spawnEffects: function spawnEffects() {
+            var frequencyRatio = 0.1;
             var rand = Math.random();
-            if (rand < 0.5) {
+            if (rand < 0.5 * frequencyRatio) {
                 this._addEffect(Scene.Star.getSmall(0, this.worldWidth));
-            } else if (rand < 0.88) {
+            } else if (rand < 0.88 * frequencyRatio) {
                 this._addEffect(Scene.Star.getMedium(0, this.worldWidth));
-            } else if (rand < 1) {
+            } else if (rand < 1 * frequencyRatio) {
                 this._addEffect(Scene.Star.getLarge(0, this.worldWidth));
             }
         },
         _render: function render() {
             this.renderer.renderAll(this.bgrEffects, true);
-            this.renderer.renderAll(this.fgrEffects, false);
             this.renderer.renderAll(this.all, false);
+            this.renderer.renderAll(this.fgrEffects, false);
         },
         _addEffect: function addEffect(obj) {
             if (obj.type == Scene.GameObjectType.BACKGROUND_EFFECT) {
@@ -181,9 +183,12 @@ Scene.Engine = (function () {
             var projectilesPlayerPairs = this._getCollisionPairs(this.projectiles, playerById);
             var projectilesEnemiesPairs = this._getCollisionPairs(this.projectiles, this.enemies);
 
-            this._processPlayerPickupsPairs(playerPickupsPairs);
-            this._processPlayerEnemiesPairs(playerEnemiesPairs);
-            this._processProjectilesShipsPairs(projectilesPlayerPairs);
+            if (!this.player.isDestroyed()) {
+                this._processPlayerPickupsPairs(playerPickupsPairs);
+                this._processPlayerEnemiesPairs(playerEnemiesPairs);
+                this._processProjectilesShipsPairs(projectilesPlayerPairs);
+            }
+
             this._processProjectilesShipsPairs(projectilesEnemiesPairs);
         },
         _processPlayerPickupsPairs: function processPlayerPickupsPairs(pairs) {
@@ -250,7 +255,7 @@ Scene.Engine = (function () {
         run: function run() {
             var self = this;
 
-            this.player = new Scene.PlayerShip(this.worldWidth / 2, this.worldHeight - this.worldHeight * 0.1);
+            this.player = new Scene.PlayerShip(this.worldWidth / 2, this.worldHeight - this.worldHeight * 0.13);
             this._addObj(this.player);
 
             setInterval(function () {
@@ -259,6 +264,7 @@ Scene.Engine = (function () {
                 self._processCollisions();
                 self._updateAllEffects();
                 self._updateObjs();
+                self.sceneWatcher.updatePlayerShip(self.player);
                 self._spawnEnemies();
                 self._spawnPickups();
                 self._spawnEffects();
