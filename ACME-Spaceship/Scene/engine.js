@@ -4,11 +4,12 @@
 var Scene = Scene || {};
 Scene.Engine = (function () {
     var Engine = Class.create({
-        initialize: function (worldWidth, worldHeight, renderer, gameLogic, interval) {
+        initialize: function (worldWidth, worldHeight, renderer, gameLogic, sceneWatcher, interval) {
             this.worldWidth = worldWidth;
             this.worldHeight = worldHeight;
-            this.gameLogic = gameLogic;
             this.renderer = renderer;
+            this.gameLogic = gameLogic;
+            this.sceneWatcher = sceneWatcher;
             this.interval = interval;
 
             this.bgrEffects = [];
@@ -181,9 +182,12 @@ Scene.Engine = (function () {
             var projectilesPlayerPairs = this._getCollisionPairs(this.projectiles, playerById);
             var projectilesEnemiesPairs = this._getCollisionPairs(this.projectiles, this.enemies);
 
-            this._processPlayerPickupsPairs(playerPickupsPairs);
-            this._processPlayerEnemiesPairs(playerEnemiesPairs);
-            this._processProjectilesShipsPairs(projectilesPlayerPairs);
+            if (!this.player.isDestroyed()) {
+                this._processPlayerPickupsPairs(playerPickupsPairs);
+                this._processPlayerEnemiesPairs(playerEnemiesPairs);
+                this._processProjectilesShipsPairs(projectilesPlayerPairs);
+            }
+
             this._processProjectilesShipsPairs(projectilesEnemiesPairs);
         },
         _processPlayerPickupsPairs: function processPlayerPickupsPairs(pairs) {
@@ -259,6 +263,7 @@ Scene.Engine = (function () {
                 self._processCollisions();
                 self._updateAllEffects();
                 self._updateObjs();
+                self.sceneWatcher.updatePlayerShip(self.player);
                 self._spawnEnemies();
                 self._spawnPickups();
                 self._spawnEffects();
