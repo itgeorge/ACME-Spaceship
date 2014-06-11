@@ -8,17 +8,17 @@ Scene.GameLogic = (function () {
     var ENEMIES_LEVEL_1 = 10;
     var ENEMIES_LEVEL_2 = 20;
     var ENEMIES_LEVEL_3 = 30;
-    var ENEMIES_LEVEL_4 = 30;
-    var ENEMIES_LEVEL_5 = 30;
-    var ENEMIES_LEVEL_6 = 30;
-    var ENEMIES_LEVEL_7 = 700;
+    var ENEMIES_LEVEL_4 = 40;
+    var ENEMIES_LEVEL_5 = 50;
+    var ENEMIES_LEVEL_6 = 60;
+    var ENEMIES_LEVEL_7 = 70;
     var LEVEL_1_SPAWN_TIME = 90;
     var LEVEL_2_SPAWN_TIME = 80;
-    var LEVEL_3_SPAWN_TIME = 50;
-    var LEVEL_4_SPAWN_TIME = 25;
-    var LEVEL_5_SPAWN_TIME = 20;
-    var LEVEL_6_SPAWN_TIME = 15;
-    var LEVEL_7_SPAWN_TIME = 10;
+    var LEVEL_3_SPAWN_TIME = 70;
+    var LEVEL_4_SPAWN_TIME = 60;
+    var LEVEL_5_SPAWN_TIME = 50;
+    var LEVEL_6_SPAWN_TIME = 40;
+    var LEVEL_7_SPAWN_TIME = 30;
 
     var GameLogic = Class.create({
         initialize: function (screenWidth) {
@@ -45,6 +45,30 @@ Scene.GameLogic = (function () {
 
             return [];
         },
+        processEnemiesForLevel: function (levelEnemiesCount, levelSpawnTime, enemiesAlive, enemies) {
+            this.callForEnemiesCounter++;
+
+            if (!this.isBossTime) {
+                if (this.enemiesCreated < levelEnemiesCount
+                    && this.callForEnemiesCounter == levelSpawnTime) {
+
+                    this.enemiesCreated++;
+                    this.callForEnemiesCounter = 0;
+                    return enemies;
+                } else {
+                    if (this.enemiesCreated == levelEnemiesCount && enemiesAlive == 0) {
+                        this.level++;
+                        this.callForEnemiesCounter = 0;
+                    }
+
+                    return [];
+                }
+            } else {
+                this.isBossTime = false;
+                //return [this.getBoss()];
+                return [];
+            }
+        },
         getNewEnemies: function (enemiesArray) {
             this.enemies = enemiesArray;
             var enemiesAlive = Object.keys(enemiesArray).length;
@@ -54,154 +78,26 @@ Scene.GameLogic = (function () {
 
             switch (this.level) {
                 case 1:
-                    this.callForEnemiesCounter++;
-
-                    if (!this.isBossTime) {
-                        if (this.enemiesCreated < ENEMIES_LEVEL_1
-                            && this.callForEnemiesCounter == LEVEL_1_SPAWN_TIME) {
-
-                            this.enemiesCreated++;
-                            this.callForEnemiesCounter = 0;
-                            return [this.getEasyEnemy()];
-                        } else {
-                            if (this.enemiesCreated == ENEMIES_LEVEL_1 && enemiesAlive == 0) {
-                                this.level++;
-                                this.callForEnemiesCounter = 0;
-                            }
-
-                            return [];
-                        }
-                    } else {
-                        this.isBossTime = false;
-                        //return [this.getBoss()];
-                        return [];
-                    }
+                    return this.processEnemiesForLevel(ENEMIES_LEVEL_1, LEVEL_1_SPAWN_TIME, enemiesAlive,
+                        [this.getEasyEnemy()]);
                 case 2:
-                    this.callForEnemiesCounter++;
-                    if (!this.isBossTime) {
-                        if (this.enemiesCreated < ENEMIES_LEVEL_2
-                            && this.callForEnemiesCounter == LEVEL_2_SPAWN_TIME) {
-                            this.enemiesCreated++;
-                            this.callForEnemiesCounter = 0;
-                            return [this.getEasyEnemy(), this.getMediumEnemy()];
-                        } else {
-                            if (this.enemiesCreated == ENEMIES_LEVEL_2 && enemiesAlive == 0) {
-                                this.level++;
-                                this.callForEnemiesCounter = 0;
-                            }
-
-                            return [];
-                        }
-                    } else {
-                        this.isBossTime = false;
-                        //return [this.getBoss()];
-                        return [];
-                    }
+                    return this.processEnemiesForLevel(ENEMIES_LEVEL_2, LEVEL_2_SPAWN_TIME, enemiesAlive,
+                        [this.getEasyEnemy(), this.getMediumEnemy()]);
                 case 3:
-                    this.callForEnemiesCounter++;
-                    if (!this.isBossTime) {
-                        if (this.enemiesCreated < ENEMIES_LEVEL_3
-                            && this.callForEnemiesCounter == LEVEL_3_SPAWN_TIME) {
-                            this.enemiesCreated++;
-                            this.callForEnemiesCounter = 0;
-                            return [this.getEasyEnemy(), this.getMediumEnemy(), this.getMediumEnemy()];
-                        } else {
-                            if (this.enemiesCreated == ENEMIES_LEVEL_3 && enemiesAlive == 0) {
-                                this.level++;
-                                this.callForEnemiesCounter = 0;
-                            }
-
-                            return [];
-                        }
-                    } else {
-                        this.isBossTime = false;
-                        //return [this.getBoss()];
-                        return [];
-                    }
+                    return this.processEnemiesForLevel(ENEMIES_LEVEL_3, LEVEL_3_SPAWN_TIME, enemiesAlive,
+                        [this.getEasyEnemy(), this.getMediumEnemy(), this.getMediumEnemy()]);
                 case 4:
-                    this.callForEnemiesCounter++;
-                    if (!this.isBossTime) {
-                        if (this.enemiesCreated < ENEMIES_LEVEL_4
-                            && this.callForEnemiesCounter == LEVEL_4_SPAWN_TIME) {
-                            this.enemiesCreated++;
-                            this.callForEnemiesCounter = 0;
-                            return [this.getEasyEnemy(), this.getMediumEnemy(), this.getHardEnemy()];
-                        } else {
-                            if (this.enemiesCreated == ENEMIES_LEVEL_4 && enemiesAlive == 0) {
-                                this.level++;
-                                this.callForEnemiesCounter = 0;
-                            }
-
-                            return [];
-                        }
-                    } else {
-                        this.isBossTime = false;
-                        //return [this.getBoss()];
-                        return [];
-                    }
+                    return this.processEnemiesForLevel(ENEMIES_LEVEL_4, LEVEL_4_SPAWN_TIME, enemiesAlive,
+                        [this.getEasyEnemy(), this.getMediumEnemy(), this.getHardEnemy()]);
                 case 5:
-                    this.callForEnemiesCounter++;
-                    if (!this.isBossTime) {
-                        if (this.enemiesCreated < ENEMIES_LEVEL_5
-                            && this.callForEnemiesCounter == LEVEL_5_SPAWN_TIME) {
-                            this.enemiesCreated++;
-                            this.callForEnemiesCounter = 0;
-                            return [this.getMediumEnemy(), this.getMediumEnemy(), this.getHardEnemy()];
-                        } else {
-                            if (this.enemiesCreated == ENEMIES_LEVEL_5 && enemiesAlive == 0) {
-                                this.level++;
-                                this.callForEnemiesCounter = 0;
-                            }
-
-                            return [];
-                        }
-                    } else {
-                        this.isBossTime = false;
-                        //return [this.getBoss()];
-                        return [];
-                    }
+                    return this.processEnemiesForLevel(ENEMIES_LEVEL_5, LEVEL_5_SPAWN_TIME, enemiesAlive,
+                        [this.getMediumEnemy(), this.getMediumEnemy(), this.getHardEnemy()]);
                 case 6:
-                    this.callForEnemiesCounter++;
-                    if (!this.isBossTime) {
-                        if (this.enemiesCreated < ENEMIES_LEVEL_6
-                            && this.callForEnemiesCounter == LEVEL_6_SPAWN_TIME) {
-                            this.enemiesCreated++;
-                            this.callForEnemiesCounter = 0;
-                            return [this.getEasyEnemy(), this.getMediumEnemy(), this.getMediumEnemy(), this.getHardEnemy()];
-                        } else {
-                            if (this.enemiesCreated == ENEMIES_LEVEL_6 && enemiesAlive == 0) {
-                                this.level++;
-                                this.callForEnemiesCounter = 0;
-                            }
-
-                            return [];
-                        }
-                    } else {
-                        this.isBossTime = false;
-                        //return [this.getBoss()];
-                        return [];
-                    }
+                    return this.processEnemiesForLevel(ENEMIES_LEVEL_6, LEVEL_6_SPAWN_TIME, enemiesAlive,
+                        [this.getEasyEnemy(), this.getMediumEnemy(), this.getMediumEnemy(), this.getHardEnemy()]);
                 case 7:
-                    this.callForEnemiesCounter++;
-                    if (!this.isBossTime) {
-                        if (this.enemiesCreated < ENEMIES_LEVEL_7
-                            && this.callForEnemiesCounter == LEVEL_7_SPAWN_TIME) {
-                            this.enemiesCreated++;
-                            this.callForEnemiesCounter = 0;
-                            return [this.getEasyEnemy(), this.getEasyEnemy(), this.getMediumEnemy(), this.getMediumEnemy(), this.getHardEnemy(), this.getHardEnemy()];
-                        } else {
-                            if (this.enemiesCreated == ENEMIES_LEVEL_7 && enemiesAlive == 0) {
-                                this.level++;
-                                this.callForEnemiesCounter = 0;
-                            }
-
-                            return [];
-                        }
-                    } else {
-                        this.isBossTime = false;
-                        //return [this.getBoss()];
-                        return [];
-                    }
+                    return this.processEnemiesForLevel(ENEMIES_LEVEL_7, LEVEL_7_SPAWN_TIME, enemiesAlive,
+                        [this.getEasyEnemy(), this.getEasyEnemy(), this.getMediumEnemy(), this.getMediumEnemy(), this.getHardEnemy(), this.getHardEnemy()]);
                 default:
                     alert('YOU WIN!');
             }
