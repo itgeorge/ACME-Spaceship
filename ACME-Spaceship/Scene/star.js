@@ -11,13 +11,13 @@ Scene.Star = (function () {
         },
     });
 
-    var smallSpeed = 1;
+    var smallSpeed = 0.5;
     var smallRadius = 1;
 
-    var medSpeed = 2;
+    var medSpeed = 0.7;
     var medRadius = 2;
     
-    var largeSpeed = 4;
+    var largeSpeed = 1;
     var largeRadius = 3;
 
     function getRandXCoord(minX, maxX) {

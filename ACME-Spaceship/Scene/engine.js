@@ -35,12 +35,13 @@ Scene.Engine = (function () {
             }
         },
         _spawnEffects: function spawnEffects() {
+            var frequencyRatio = 0.1;
             var rand = Math.random();
-            if (rand < 0.5) {
+            if (rand < 0.5 * frequencyRatio) {
                 this._addEffect(Scene.Star.getSmall(0, this.worldWidth));
-            } else if (rand < 0.88) {
+            } else if (rand < 0.88 * frequencyRatio) {
                 this._addEffect(Scene.Star.getMedium(0, this.worldWidth));
-            } else if (rand < 1) {
+            } else if (rand < 1 * frequencyRatio) {
                 this._addEffect(Scene.Star.getLarge(0, this.worldWidth));
             }
         },
@@ -254,7 +255,7 @@ Scene.Engine = (function () {
         run: function run() {
             var self = this;
 
-            this.player = new Scene.PlayerShip(this.worldWidth / 2, this.worldHeight - this.worldHeight * 0.1);
+            this.player = new Scene.PlayerShip(this.worldWidth / 2, this.worldHeight - this.worldHeight * 0.13);
             this._addObj(this.player);
 
             setInterval(function () {
