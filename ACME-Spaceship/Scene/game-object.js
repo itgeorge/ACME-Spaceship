@@ -59,6 +59,7 @@ Scene.GameObject = (function () {
         },
         takeDamage: function takeDamage(damage) {
             this.hitpoints -= damage;
+            this.hitpoints = Math.max(this.hitpoints, 0);
         },
         destroy: function destroy() {
             this.hitpoints = 0;

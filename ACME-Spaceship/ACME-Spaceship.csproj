@@ -78,6 +78,7 @@
     <Content Include="Scene\projectile.js" />
     <Content Include="Scene\prototype.js" />
     <Content Include="Scene\renderer.js" />
+    <Content Include="Scene\scene-watcher.js" />
     <Content Include="Scene\seeker.js" />
     <Content Include="Scene\self-controlled-object.js" />
     <Content Include="Scene\star.js" />

@@ -29,6 +29,7 @@
     <script src="Scene/star.js"></script>
     <script src="Scene/player-ship.js"></script>
     <!--Game-->
+    <script src="Scene/scene-watcher.js"></script>
     <script src="Scene/game-logic.js"></script>
     <script src="Scene/engine.js"></script>
     <script src="Scene/renderer.js"></script>
@@ -52,12 +53,12 @@
     <div class="container">
         <canvas id="viewport" width="800" height="600"></canvas>
         <div class="bar health">
-            <div class="indicator"></div>
+            <div id="health-indicator" class="indicator"></div>
         </div>
         <i class="fa fa-heart health"></i>
         
         <div class="bar shield">
-            <div class="indicator"></div>
+            <div id="shield-indicator" class="indicator"></div>
         </div>
         <i class="fa fa-shield shield"></i>
 
