@@ -2,7 +2,7 @@
 var Scene = Scene || {};
 Scene.Laser =
 (function () {
-    var radius = 10;
+    var radius = 4;
     var speed = 0;
     var damage = 10;
 
