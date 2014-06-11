@@ -20,6 +20,52 @@ header{
 	margin-top: 40px;
 }
 
+.header-container{
+	display: block;
+	margin: auto;
+	width: @min-width;
+	position: relative;
+
+	h1{
+		color: white;
+		font-size: 36px;
+		line-height: 80px;
+		vertical-align: center;
+	}
+
+	.score-label{
+		position: absolute;
+		right: 0;
+		top: 5px;
+		color: white;
+		font-size: 24px;
+	}
+
+	.level-label{
+		position: absolute;
+		right: 100px;
+		top: 5px;
+		color: white;
+		font-size: 24px;
+	}
+
+	#score{
+		position: absolute;
+		right: 0;
+		top: 28px;
+		color: white;
+		font-size: 36px;
+	}
+
+	#level{
+		position: absolute;
+		right: 100px;
+		top: 28px;
+		color: white;
+		font-size: 36px;
+	}
+}
+
 .health-container{
 	position: absolute;
 	top: 11px;

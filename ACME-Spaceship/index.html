@@ -46,12 +46,13 @@
 </head>
 <body onload="init(event)">
     <header>
-        <nav>
-            <ul>
-                <li><span>score</span><span id="score"></span></li>
-                <li><span>level</span><span id="level"></span></li>
-            </ul>
-        </nav>
+        <div class="header-container">
+            <h1>Spaceship</h1>
+                <p class="score-label">score</p>
+                <p class="level-label">level</p>
+                <label id="score">321</label>
+                <label id="level">2</label>
+        </div>
     </header>
     <div class="container">
         <canvas id="viewport" width="800" height="600"></canvas>
