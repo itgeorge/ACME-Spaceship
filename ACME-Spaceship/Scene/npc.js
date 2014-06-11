@@ -6,8 +6,10 @@ Scene.NPC = Class.create(Scene.SelfControlledObject, {
     },
     update: function ($super) {
         if (this.firing) {
-            var firedObject = this.firing.getFiredObject();
-            this._addProduced(firedObject);
+            var firedObject = this.firing.getProjectile(this.x, this.y);
+            if(firedObject) {
+                this._produce(firedObject);
+            }
         }
         return $super();
     }

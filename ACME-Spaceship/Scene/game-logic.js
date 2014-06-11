@@ -62,8 +62,7 @@ Scene.GameLogic = (function () {
 
                             this.enemiesCreated++;
                             this.callForEnemiesCounter = 0;
-                            //return [this.getEasyEnemy()];
-                            return  [this.getHardEnemy()]
+                            return [this.getEasyEnemy()];
                         } else {
                             if (this.enemiesCreated == ENEMIES_LEVEL_1 && enemiesAlive == 0) {
                                 this.level++;
@@ -219,7 +218,8 @@ Scene.GameLogic = (function () {
         // firing, movement, x, y, radius, hitpoints, maxSpeed, type, renderType
         getEasyEnemy: function () {
             var x = getRandXCoord(1, this.screenWidth);
-            return new Scene.EnemyShip(null, new StraightMove(4, false), x, 1, 10, 4, 4, Scene.GameObjectType.ENEMY_SHIP, Scene.GameObjectRenderType.EASY_ENEMY);
+            var fireStrat = new StraightFireDown();
+            return new Scene.EnemyShip(fireStrat, new StraightMove(4, false), x, 1, 10, 4, 4, Scene.GameObjectType.ENEMY_SHIP, Scene.GameObjectRenderType.EASY_ENEMY);
         },
         getMediumEnemy: function () {
             var x = getRandXCoord(1, this.screenWidth);
