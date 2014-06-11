@@ -1,0 +1,174 @@
+@main-color: #50557f;
+@red-color: #FF2E70;
+@cyan-color: #2EFFDC;
+@min-width: 800px;
+
+body{
+	font-family: 'myFirstFont';
+}
+
+header{
+	height: 80px;
+	background-color: @main-color;
+}
+
+.container{
+	display: block;
+	margin: auto;
+	width: @min-width;
+	position: relative;
+	margin-top: 40px;
+}
+
+.header-container{
+	display: block;
+	margin: auto;
+	width: @min-width;
+	position: relative;
+
+	h1{
+		color: white;
+		font-size: 36px;
+		line-height: 80px;
+		vertical-align: center;
+	}
+
+	.score-label{
+		position: absolute;
+		right: 0;
+		top: 5px;
+		color: white;
+		font-size: 24px;
+	}
+
+	.level-label{
+		position: absolute;
+		right: 100px;
+		top: 5px;
+		color: white;
+		font-size: 24px;
+	}
+
+	#score{
+		position: absolute;
+		right: 0;
+		top: 28px;
+		color: white;
+		font-size: 36px;
+	}
+
+	#level{
+		position: absolute;
+		right: 100px;
+		top: 28px;
+		color: white;
+		font-size: 36px;
+	}
+}
+
+.health-container{
+	position: absolute;
+	top: 11px;
+	left: 350px;
+	width: 100px;
+	height: 40px;
+	div{
+		position: relative;
+		display: inline-block;
+		width: auto;
+		margin-left: 16px;
+		height: 40px;
+	}
+	
+}
+
+
+.bar{
+	width: 210px;
+	height: 20px;
+	background: #333356;
+	border-radius: 10px;
+	top: 10px;
+
+	&.health{
+		position: absolute;
+		top: 10px;
+		left: 10px;
+
+		.indicator{
+			left: 5px;
+		}
+	}
+
+	&.shield{
+		position: absolute;
+		right: 10px;
+
+		.indicator{
+			right: 5px;
+			background-color: @cyan-color;
+		}
+	}
+
+	.indicator{
+		position: absolute;
+		width: 200px;
+		height: 10px;
+		top: 5px;
+		border-radius: 5px;
+		width: 200px;
+		background: @red-color;
+	}
+}
+
+i{
+	border:none;
+	color: white;
+	font-size: 20px;
+	&.health{
+		position: absolute;
+		left: 230px;
+		top: 12px;
+	}
+
+	&.shield{
+		position: absolute;
+		right: 230px;
+		top: 11px;
+	}
+}
+
+.seeker-indicator{
+	position: absolute;
+	left: 4px;
+	bottom: 10px;
+}
+
+.laser-indicator{
+	position: absolute;
+	left: 60px;
+	bottom: 10px;
+}
+.seeker-counter{
+	position: absolute;
+	font-size: 20px;
+	color: white;
+	left: 30px;
+	bottom: 10px;
+	width: 50px;
+}
+.laser-counter{
+	position: absolute;
+	font-size: 20px;
+	color: white;
+	left: 86px;
+	bottom: 10px;
+	width: 50px
+}
+
+
+@font-face
+{
+font-family: 'myFirstFont';
+src: url(../assets/Xenogears_font.ttf);
+}
